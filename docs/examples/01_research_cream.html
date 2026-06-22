@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+  --accent: #7b5a45;
+  --accent-light: #f5ede8;
+  --accent-dark: #5d4032;
+  --text-primary: #202124;
+  --text-secondary: #3c4043;
+  --text-muted: #5f6368;
+  --text-light: #80868b;
+  --border: #e8eaed;
+  --bg-subtle: #faf8f6;
+  --bg-subtle-end: #f3efeb;
+}
+
+.resume-container {
+  font-family: "Google Sans Text", "Product Sans", "Roboto", Arial, sans-serif;
+  color: var(--text-primary);
+  line-height: 1.5;
+  width: 816px;
+  box-sizing: border-box;
+  padding: 24px 34px 26px;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 11px;
+  padding-bottom: 11px;
+  border-bottom: 3px solid var(--accent);
+}
+
+.header-left { flex: 1; }
+
+h1 {
+  font-family: "Google Sans", "Product Sans", Arial, sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.contact-info {
+  font-size: 10.4px;
+  color: var(--text-muted);
+  text-align: right;
+  line-height: 1.65;
+  white-space: nowrap;
+}
+
+.contact-info a {
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+.summary {
+  font-size: 10.95px;
+  background: linear-gradient(135deg, var(--bg-subtle) 0%, var(--bg-subtle-end) 100%);
+  padding: 10px 13px 10px 32px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  line-height: 1.52;
+  border: 1px solid rgba(123, 90, 69, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.summary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 22px;
+  background: linear-gradient(180deg, rgba(123, 90, 69, 0.18) 0%, rgba(123, 90, 69, 0.08) 100%);
+  border-radius: 8px 0 0 8px;
+}
+
+.section-title {
+  font-family: "Google Sans", "Product Sans", Arial, sans-serif;
+  font-size: 11.3px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #4d3427;
+  border-bottom: 1.5px solid var(--border);
+  padding-bottom: 3px;
+  margin-top: 9px;
+  margin-bottom: 6px;
+  letter-spacing: 1.15px;
+}
+
+.experience-item { margin-bottom: 8px; }
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.job-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.company-info {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  margin-top: 0;
+}
+
+.date-location {
+  font-size: 10.35px;
+  color: var(--text-light);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.bullet-list {
+  margin-top: 5px;
+  margin-bottom: 0;
+  padding-left: 18px;
+}
+
+.bullet-list li {
+  font-size: 10.6px;
+  margin-bottom: 3px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.bullet-list li::marker { color: var(--accent); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 22px;
+  margin-bottom: 5px;
+}
+
+.skill-category {
+  font-size: 10.3px;
+  color: var(--text-secondary);
+  line-height: 1.44;
+}
+
+.skill-label {
+  display: block;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 10.3px;
+  margin-bottom: 1px;
+}
+
+.project-item {
+  font-size: 10.6px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  padding-left: 18px;
+  line-height: 1.45;
+}
+
+.project-name {
+  font-size: 10.6px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.project-anchor {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.highlight {
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+.bullet-anchor {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+a.inline-link {
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+.cred-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+
+.pill {
+  font-size: 9.9px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  background: var(--accent-light);
+  border-radius: 12px;
+  padding: 3px 10px;
+  display: inline-block;
+}
+
+.edu-school {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  margin-top: 1px;
+}
+
+@media print {
+  .resume-container {
+    padding: 0;
+    width: 100%;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <div class="resume-container">
+      <header class="header">
+        <div class="header-left">
+          <h1>Jordan A. Reyes</h1>
+          <div class="subtitle">Research Engineer - Agentic Systems, Evaluations &amp; LLM Infrastructure</div>
+        </div>
+        <div class="contact-info">
+          jordan.reyes@example.com<br>
+          555-018-2940 &bull; Seattle, WA<br>
+          <a href="https://linkedin.com/in/example">LinkedIn</a> &bull; <a href="https://github.com/example">GitHub</a>
+        </div>
+      </header>
+
+      <section class="summary">
+        Research-minded engineer with 7+ years building agentic systems, evaluation harnesses, and production LLM infrastructure across startup and enterprise environments. Designs experiments on model behavior, then builds the systems needed to run them reliably in production, from multi-agent workflows and metacognitive benchmarks to secure LLM platforms used daily by 100+ engineers and analysts.
+      </section>
+
+      <section>
+        <h2 class="section-title">Core Expertise</h2>
+        <div class="skills-grid">
+          <div class="skill-category"><span class="skill-label">Agentic Systems &amp; Evals</span>Multi-agent orchestration, automated evaluation<br>Benchmark design, prompt experiments, RAG</div>
+          <div class="skill-category"><span class="skill-label">ML &amp; LLM Stack</span>Python, PyTorch, TensorFlow, multimodal AI<br>QLoRA, LangChain, LlamaIndex, Claude/GPT/Gemini APIs</div>
+          <div class="skill-category"><span class="skill-label">Infrastructure &amp; Reliability</span>H100 clusters, vLLM, Docker, Podman, FastAPI<br>CI/CD, air-gapped deployment, cost and latency optimization</div>
+          <div class="skill-category"><span class="skill-label">Research Execution</span>Quantitative benchmarking, observability, simulation-minded testing<br>TypeScript, Next.js, Firestore, technical documentation</div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Professional Experience</h2>
+
+        <div class="experience-item">
+          <div class="item-header">
+            <span class="job-title">Co-Founder &amp; Lead Architect</span>
+            <span class="date-location">March 2025 - Present</span>
+          </div>
+          <div class="company-info"><a class="inline-link" href="https://northwind.ai">Northwind AI</a></div>
+          <ul class="bullet-list">
+            <li><span class="bullet-anchor"><a class="inline-link" href="https://continuum.northwind.ai">Cadence:</a></span> Built an <span class="highlight">8-step multi-agent harness</span> with visual self-correction, rendering outputs at key timesteps to verify visibility, correctness, and overlap.</li>
+            <li><span class="bullet-anchor"><a class="inline-link" href="https://shoreline.northwind.ai">Lighthouse + CoreBench:</a></span> Built metacognitive calibration benchmarks across <span class="highlight">7+ models</span> and <span class="highlight">11 reasoning categories</span> to test whether models know what they do not know.</li>
+            <li><span class="bullet-anchor"><a class="inline-link" href="https://adjutant.northwind.ai">TalentFlow:</a></span> Shipped a paying SaaS in <span class="highlight">6 weeks</span> using hybrid DOM extraction, structured LLM entity extraction, and semantic gap analysis across <span class="highlight">6 job platforms</span>.</li>
+          </ul>
+        </div>
+
+        <div class="experience-item">
+          <div class="item-header">
+            <span class="job-title">CTO &amp; Co-Founder</span>
+            <span class="date-location">March 2025 - Present</span>
+          </div>
+          <div class="company-info"><a class="inline-link" href="https://claritylens.com">ClarityLens</a></div>
+          <ul class="bullet-list">
+            <li><span class="bullet-anchor">Parallelized inference:</span> Architected prompt and model orchestration that classifies <span class="highlight">80+ categories</span> of fallacies and cuts full-article analysis from roughly <span class="highlight">3 minutes to 10 seconds</span>.</li>
+            <li><span class="bullet-anchor">Observability:</span> Built multi-tier caching and telemetry across extension clients, Firestore, and Vertex AI, tracking <span class="highlight">token usage</span>, <span class="highlight">cache hit rates</span>, and <span class="highlight">cost per analysis</span>.</li>
+            <li><span class="bullet-anchor">Production delivery:</span> Led a <span class="highlight">6-person team</span> to ship the product to the Chrome Web Store with a <span class="highlight">4.7-star rating</span> and usage-based SaaS monetization.</li>
+          </ul>
+        </div>
+
+        <div class="experience-item">
+          <div class="item-header">
+            <span class="job-title">Principal Investigator for Generative AI Innovation</span>
+            <span class="date-location">2022 - Sept 2025</span>
+          </div>
+          <div class="company-info">Atlas Defense Systems</div>
+          <ul class="bullet-list">
+            <li><span class="bullet-anchor">Enterprise rollout:</span> Led AI enablement for a <span class="highlight">1,000+ person organization</span>, deploying <span class="highlight">8 H100 GPU servers</span> plus production RAG systems that cut document retrieval from hours to minutes.</li>
+            <li><span class="bullet-anchor">AI incubator:</span> Coordinated <span class="highlight">20 principal investigators</span> across <span class="highlight">5 departments</span>, producing <span class="highlight">5+ shipping AI projects</span> and mentoring engineers on evaluation and responsible deployment.</li>
+            <li><span class="bullet-anchor">Secure LLM infrastructure:</span> Built multi-step reasoning pipelines, coding assistants, and containerized AI applications for air-gapped environments, including services that saved full-person labor across multi-week events.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Selected Projects</h2>
+        <div class="project-item">
+          <span class="project-anchor"><a class="inline-link" href="https://shoreline.northwind.ai">Lighthouse Benchmark:</a></span> Metacognitive calibration benchmark across <span class="highlight">11 reasoning categories</span> for reliability-aware agent workflows.
+        </div>
+        <div class="project-item">
+          <span class="project-anchor"><a class="inline-link" href="https://continuum.northwind.ai">Cadence:</a></span> Long-horizon agent framework where LLMs research, write, generate Manim animations, and self-correct through visual verification checkpoints.
+        </div>
+        <div class="project-item">
+          <span class="project-anchor">Automated Track Matching:</span> Transformer-based evaluation framework with rigorous automated testing over <span class="highlight">10,000+ datasets</span>.
+        </div>
+        <div class="project-item">
+          <span class="project-anchor"><a class="inline-link" href="https://github.com/example/Real_time_fallacy_detection">Real-time Speech Analysis:</a></span> Interactive Whisper + GPT-4/LLaMA system for live reasoning support; cited in peer-reviewed research. <a class="inline-link" href="https://www.youtube.com/watch?v=I9ScRL_10So">Demo</a>.
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Education &amp; Credentials</h2>
+        <div class="item-header">
+          <span class="job-title">M.S. &amp; B.S. in Computer Science (Machine Learning)</span>
+          <span class="date-location">Dec 2019</span>
+        </div>
+        <div class="edu-school">State University &bull; GPA: 3.71 &bull; Honors</div>
+        <div class="cred-pills">
+          <span class="pill">AI Startup Accelerator (2025)</span>
+          <span class="pill">AI Startup School (2025)</span>
+          <span class="pill">Applied ML Conf Presenter (2021)</span>
+          <span class="pill">Work Cited in arXiv (2024)</span>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

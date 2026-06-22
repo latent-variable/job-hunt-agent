@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #0a0a0a; }
+
+:root {
+  --vantage-black: #0a0a0a;
+  --vantage-dark: #111111;
+  --vantage-navy: #1a1a1a;
+  --vantage-gray: #2a2a2a;
+  --vantage-light-gray: #4a4a4a;
+  --vantage-accent: #4A9FD9;
+  --vantage-accent-dim: #3a7fad;
+  --text-primary: #ffffff;
+  --text-secondary: #d0d0d0;
+  --text-muted: #999999;
+  --text-dim: #666666;
+  --border: #333333;
+  --bg-subtle: #141414;
+}
+
+.resume-container {
+  font-family: "IBM Plex Mono", "SF Mono", "Monaco", "Courier New", monospace;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  width: 816px;
+  box-sizing: border-box;
+  padding: 20px 36px 6px;
+  background: var(--vantage-black);
+  overflow: hidden;
+  position: relative;
+}
+
+.resume-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--vantage-accent);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 60px;
+  height: 1px;
+  background: var(--vantage-accent);
+}
+
+.header-left { flex: 1; }
+
+h1 {
+  font-family: "IBM Plex Sans", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: var(--text-primary);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.4;
+}
+
+.contact-info {
+  font-size: 9.5px;
+  color: var(--text-muted);
+  text-align: right;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.contact-info a {
+  color: var(--vantage-accent);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 9.5px;
+  letter-spacing: 0;
+}
+
+.contact-info a:hover {
+  color: var(--text-primary);
+}
+
+.summary {
+  font-size: 11px;
+  background: var(--bg-subtle);
+  padding: 10px 16px 10px 18px;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  border-left: 2px solid var(--vantage-accent);
+  position: relative;
+}
+
+.summary::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 6px;
+  width: 4px;
+  height: 4px;
+  background: var(--vantage-accent);
+}
+
+.section-title {
+  font-family: "IBM Plex Sans", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+}
+
+.section-title::before {
+  content: "[ ";
+  color: var(--vantage-accent);
+  margin-right: 0px;
+  font-weight: 700;
+}
+
+.section-title::after {
+  content: " ]";
+  color: var(--vantage-accent);
+  margin-left: 0px;
+  font-weight: 700;
+}
+
+.experience-item { margin-bottom: 10px; }
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.job-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0;
+}
+
+.company-info {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--vantage-accent);
+  margin-top: 2px;
+  letter-spacing: 0;
+}
+
+.date-location {
+  font-size: 9.5px;
+  color: var(--text-dim);
+  font-weight: 400;
+  white-space: nowrap;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.bullet-list {
+  margin-top: 4px;
+  margin-bottom: 0;
+  padding-left: 16px;
+}
+
+.bullet-list li {
+  font-size: 10.5px;
+  margin-bottom: 4px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.bullet-list li::marker {
+  color: var(--vantage-accent-dim);
+  font-size: 6px;
+  content: "- ";
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  margin-bottom: 8px;
+  background: var(--bg-subtle);
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+}
+
+.skill-category {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.skill-label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 9.5px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.project-item {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  padding-left: 16px;
+  line-height: 1.4;
+}
+
+.project-anchor {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.highlight {
+  font-weight: 600;
+  color: var(--vantage-accent);
+}
+
+.bullet-anchor {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+a.inline-link {
+  color: var(--vantage-accent);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--vantage-accent-dim);
+  transition: border-color 0.2s;
+}
+
+a.inline-link:hover {
+  border-bottom-color: var(--vantage-accent);
+}
+
+.cred-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.pill {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--vantage-accent);
+  background: rgba(74, 159, 217, 0.08);
+  border: 1px solid var(--vantage-accent-dim);
+  padding: 4px 8px;
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pill.clearance {
+  background: var(--vantage-accent);
+  color: var(--vantage-black);
+  border-color: var(--vantage-accent);
+  font-weight: 700;
+}
+
+.edu-school {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 4px;
+  letter-spacing: 0;
+}
+
+@media print {
+  .resume-container {
+    width: 816px;
+    box-sizing: border-box;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <div class="resume-container">
+      <header class="header">
+        <div class="header-left">
+          <h1>Jordan A. Reyes</h1>
+          <div class="subtitle">Agentic AI Systems &bull; Autonomous Coding Infrastructure &bull; Air-Gapped LLM Deployment</div>
+        </div>
+        <div class="contact-info">
+          jordan.reyes@example.com<br>
+          555-018-2940 &bull; Seattle, WA<br>
+          <a href="https://linkedin.com/in/example">LinkedIn</a> &bull; <a href="https://github.com/example">GitHub</a>
+        </div>
+      </header>
+
+      <section class="summary">
+        AI engineer and startup founder shipping agentic systems and autonomous coding infrastructure in production. Deployed and scaled LLM platforms in secure, air-gapped defense environments for 100+ users. Took AI products from idea to paying customers in weeks, not months. Active Security Clearance.
+      </section>
+
+      <section>
+        <h2 class="section-title">Core Expertise</h2>
+        <div class="skills-grid">
+          <div class="skill-category"><span class="skill-label">Production LLM Inference</span>H100 clusters, llama.cpp, MLX, Vertex AI<br>Air-gapped deployment, vLLM, cost-optimized serving</div>
+          <div class="skill-category"><span class="skill-label">Agent Orchestration</span>Multi-agent pipelines, MCP servers, RAG systems<br>Autonomous coding workflows (Claude Code, Codex CLI)</div>
+          <div class="skill-category"><span class="skill-label">Engineering</span>Python (7+ yrs), TypeScript, Next.js, FastAPI<br>Docker, CI/CD, GCP, AWS, Firebase</div>
+          <div class="skill-category"><span class="skill-label">Idea → Production</span>SaaS monetization (Stripe), Chrome Extensions<br>Cross-functional leadership, stakeholder communication</div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Professional Experience</h2>
+
+        <div class="experience-item">
+          <div class="item-header">
+            <span class="job-title">Co-Founder & CTO</span>
+            <span class="date-location">March 2025 - Present</span>
+          </div>
+          <div class="company-info"><a class="inline-link" href="https://northwind.ai">Northwind AI</a></div>
+          <ul class="bullet-list">
+            <li>Built autonomous multi-agent pipeline processing <span class="highlight">1.38M documents</span> — discovery agents score, route, and publish through editorial verification, replacing manual analyst workflows with composable agentic skills.</li>
+            <li>Shipped <span class="highlight">3 monetized products</span> from idea to paying customers, including a recruitment SaaS delivered in <span class="highlight">6 weeks</span> with Stripe billing and real-time sync across 6 job platforms.</li>
+            <li>Designed <span class="highlight">autonomous coding infrastructure</span> (CLAUDE.md, AGENTS.md, MCP servers) enabling AI-driven development across 5+ production repositories.</li>
+            <li>Built <a class="inline-link" href="https://continuum.northwind.ai">8-step agent harness</a> with visual self-correction — agents render and verify outputs at key timesteps, catching errors code-only validation misses.</li>
+          </ul>
+        </div>
+
+        <div class="experience-item">
+          <div class="item-header">
+            <span class="job-title">Principal Investigator for Generative AI Innovation</span>
+            <span class="date-location">2022 - Sept 2025</span>
+          </div>
+          <div class="company-info">Atlas Defense Systems</div>
+          <ul class="bullet-list">
+            <li>Deployed and scaled LLM systems in <span class="highlight">air-gapped environments</span> for <span class="highlight">100+ users</span> — <span class="highlight">8 H100 GPU servers</span>, production RAG, and AI coding assistants in VS Code, all still in daily use after departure.</li>
+            <li>Cut document retrieval from hours to minutes with enterprise RAG over existing knowledge bases, directly expanding analyst throughput across a <span class="highlight">1,000+ person command</span>.</li>
+            <li>Founded cross-departmental AI incubator — coordinated <span class="highlight">15 PIs</span> across <span class="highlight">4 departments</span>, shipped <span class="highlight">5+ AI projects</span>, briefed flag officers on capability roadmaps.</li>
+          </ul>
+        </div>
+
+        <div class="experience-item">
+          <div class="item-header">
+            <span class="job-title">Co-Founder & Technical Advisor</span>
+            <span class="date-location">2025 - Present</span>
+          </div>
+          <div class="company-info"><a class="inline-link" href="https://claritylens.com">ClarityLens</a></div>
+          <ul class="bullet-list">
+            <li>Architected and launched product to Chrome Web Store (<span class="highlight">4.7-star rating</span>), led initial <span class="highlight">6-person team</span> through shipping, then transitioned to advisory role. Built prompt orchestration cutting analysis from <span class="highlight">3 min to 10 sec</span> via problem decomposition and multi-tier caching.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Selected Projects</h2>
+        <div class="project-item">
+          <span class="project-anchor"><a class="inline-link" href="https://shoreline.northwind.ai">Lighthouse Benchmark:</a></span> Metacognitive calibration benchmark across <span class="highlight">11 reasoning categories</span> evaluating <span class="highlight">7+ production models</span> (Claude, GPT-5, Gemini, LLaMA) for reliability-aware agent workflows.
+        </div>
+        <div class="project-item">
+          <span class="project-anchor">Automated Track Matching (ML Research):</span> Deep learning Transformer framework for enterprise modeling & simulation, achieving equivalent accuracy with L1 Logistic Regression at <span class="highlight">10x speed</span>. Presented at <span class="highlight">Applied ML Conf 2021</span> to Admirals and Captains.
+        </div>
+        <div class="project-item">
+          <span class="project-anchor"><a class="inline-link" href="https://github.com/example/Real_time_fallacy_detection">Real-time Speech Analysis:</a></span> Interactive Whisper + GPT-4/LLaMA system for live reasoning support. <a class="inline-link" href="https://www.youtube.com/watch?v=I9ScRL_10So">Demo</a>.
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Education & Credentials</h2>
+        <div class="item-header">
+          <span class="job-title">M.S. & B.S. in Computer Science (Machine Learning)</span>
+          <span class="date-location">Dec 2019</span>
+        </div>
+        <div class="edu-school">State University &bull; GPA: 3.71 &bull; Honors</div>
+        <div class="cred-pills">
+          <span class="pill clearance">Active Security Clearance</span>
+          <span class="pill">AI Startup Accelerator, 2025</span>
+          <span class="pill">AI Startup School, 2025</span>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

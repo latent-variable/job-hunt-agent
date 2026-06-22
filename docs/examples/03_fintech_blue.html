@@ -1,0 +1,314 @@
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&display=swap" rel="stylesheet">
+        <style>
+    /* ===== Ledgerstone-inspired Resume Theme ===== */
+    .resume-container {
+      font-family: 'Google Sans Text', 'Product Sans', 'Roboto', Arial, sans-serif;
+      color: #202124;
+      line-height: 1.5;
+      width: 816px;
+      box-sizing: border-box;
+      padding: 24px 36px 28px;
+      background: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #0052ff;
+    }
+    .header-left {
+      flex: 1;
+    }
+    h1 {
+      font-family: 'Google Sans', 'Product Sans', Arial, sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      margin: 0 0 2px 0;
+      color: #202124;
+      letter-spacing: -0.3px;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #5f6368;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+    .contact-info {
+      font-size: 10.5px;
+      color: #5f6368;
+      text-align: right;
+      line-height: 1.7;
+      white-space: nowrap;
+    }
+    .contact-info a {
+      color: #0052ff;
+      text-decoration: none;
+    }
+
+    /* Summary */
+    .summary {
+      font-size: 11px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f4 100%);
+      padding: 8px 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      color: #3c4043;
+      line-height: 1.5;
+      border-left: 3px solid #0052ff;
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-family: 'Google Sans', 'Product Sans', Arial, sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #0052ff;
+      border-bottom: 1.5px solid #e8eaed;
+      padding-bottom: 3px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+      letter-spacing: 1.2px;
+    }
+
+    /* Experience Items */
+    .experience-item {
+      margin-bottom: 8px;
+    }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .job-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #202124;
+    }
+    .company-info {
+      font-size: 11px;
+      font-weight: 500;
+      color: #0052ff;
+      margin-top: 0;
+    }
+    .date-location {
+      font-size: 10.5px;
+      color: #80868b;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* Bullet Lists */
+    .bullet-list {
+      margin-top: 4px;
+      margin-bottom: 0;
+      padding-left: 18px;
+    }
+    .bullet-list li {
+      font-size: 10.8px;
+      margin-bottom: 3px;
+      color: #3c4043;
+      line-height: 1.5;
+    }
+    .bullet-list li::marker {
+      color: #5f6368;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
+      margin-bottom: 6px;
+    }
+    .skill-category {
+      font-size: 10.5px;
+      color: #3c4043;
+      line-height: 1.45;
+    }
+    .skill-label {
+      font-weight: 700;
+      color: #202124;
+      font-size: 10.5px;
+    }
+
+    /* Projects */
+    .project-item {
+      font-size: 10.8px;
+      color: #3c4043;
+      margin-bottom: 6px;
+      padding-left: 18px;
+      line-height: 1.5;
+    }
+    .project-name {
+      font-size: 10.8px;
+      font-weight: 700;
+      color: #202124;
+    }
+
+    /* Highlights - restrained, dark bold instead of blue */
+    .highlight {
+      font-weight: 700;
+      color: #202124;
+    }
+
+    /* Pill tags for credentials */
+    .cred-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .pill {
+      font-size: 10px;
+      font-weight: 500;
+      color: #0052ff;
+      background: #e8f0fe;
+      border-radius: 12px;
+      padding: 3px 10px;
+      display: inline-block;
+    }
+    .pill.green {
+      color: #137333;
+      background: #e6f4ea;
+    }
+
+    /* Inline links */
+    a.inline-link {
+      color: #0052ff;
+      text-decoration: none;
+    }
+
+    /* Education */
+    .edu-school {
+      font-size: 11px;
+      font-weight: 500;
+      color: #0052ff;
+      margin-top: 1px;
+    }
+
+    /* Print */
+    @media print {
+      .resume-container {
+        padding: 0;
+        width: 100%;
+      }
+    }
+  </style>
+      </head>
+      <body><div class="resume-container">
+  <header class="header">
+    <div class="header-left">
+      <h1>Jordan A. Reyes</h1>
+      <div class="subtitle">Principal AI Engineer &bull; Agentic Systems &amp; AI Automation &bull; Startup Founder</div>
+    </div>
+    <div class="contact-info">
+      jordan.reyes@example.com<br>
+      555-018-2940 &bull; Seattle, WA<br>
+      <a href="https://linkedin.com/in/example">LinkedIn</a> &bull; <a href="https://github.com/example">GitHub</a>
+    </div>
+  </header>
+
+  <section class="summary">Principal AI engineer specializing in <strong>agentic systems, multi-agent orchestration, and AI automation at scale</strong>. Shipped 3 monetized AI products with autonomous workflows, visual self-correction loops, and deterministic evaluation pipelines. Led AI-first transformation for a 1,000+ person organization, deploying RAG systems, inference infrastructure, and developer tooling used daily by 100+ engineers. Designs AI systems as composable, observable, self-improving infrastructure - not isolated model integrations.</section>
+
+  <section>
+    <h2 class="section-title">Core Expertise</h2>
+    <div class="skills-grid">
+      <div class="skill-category"><span class="skill-label">Agentic AI &amp; LLMs:</span> Multi-agent orchestration, agentic workflows, RAG, prompt engineering, fine-tuning, LangChain, LlamaIndex, deterministic evaluation, hallucination mitigation, data grounding</div>
+      <div class="skill-category"><span class="skill-label">Backend &amp; Platform:</span> Python (7+ yr), TypeScript, FastAPI, Node.js, scalable API design, event-driven architectures, CI/CD, Docker, Kubernetes</div>
+      <div class="skill-category"><span class="skill-label">Infrastructure:</span> H100 GPU clusters, vLLM, parallelized inference pipelines, GCP (Vertex AI, Firestore, Cloud Functions), AWS</div>
+      <div class="skill-category"><span class="skill-label">AI Reliability:</span> Observability into agent reasoning chains, LLM cost tracking, token monitoring, cache hit analysis, self-correcting agent loops, metacognitive calibration</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Professional Experience</h2>
+
+    <div class="experience-item">
+      <div class="item-header">
+        <span class="job-title">Co-Founder &amp; Lead Architect</span>
+        <span class="date-location">March 2025 - Present</span>
+      </div>
+      <div class="company-info"><a class="inline-link" href="https://northwind.ai">Northwind AI</a></div>
+      <ul class="bullet-list">
+        <li>Built <span class="highlight">multi-agent orchestration framework (<a class="inline-link" href="https://continuum.northwind.ai">Cadence</a>)</span>: 8-step agentic pipeline with self-validating execution using staged output verification - enabling detection of errors missed by code-only validation. Vendor-agnostic across Claude, Gemini, GPT.</li>
+        <li>Shipped <span class="highlight">AI automation platform (<a class="inline-link" href="https://adjutant.northwind.ai">TalentFlow</a>)</span> from concept to monetized SaaS in 6 weeks: autonomous entity extraction across 6 platforms, semantic gap analysis, and tailored output generation for paying subscribers.</li>
+        <li>Built <span class="highlight">LLM metacognitive calibration benchmarks</span> (<a class="inline-link" href="https://shoreline.northwind.ai">Lighthouse</a>/CoreBench) testing 7+ models across 11 categories - measuring whether models know what they don't know, enabling reliability-aware model selection.</li>
+      </ul>
+    </div>
+
+    <div class="experience-item">
+      <div class="item-header">
+        <span class="job-title">CTO &amp; Co-Founder</span>
+        <span class="date-location">March 2025 - Present</span>
+      </div>
+      <div class="company-info"><a class="inline-link" href="https://claritylens.com">ClarityLens</a> - Production AI Content Analysis Platform (4.7-star Chrome Extension)</div>
+      <ul class="bullet-list">
+        <li>Architected <span class="highlight">two-step parallelized inference pipeline</span>: parallel claim identification then simultaneous classification across 80+ categories - reducing full-article analysis from 3 minutes to 10 seconds.</li>
+        <li>Built <span class="highlight">multi-tier caching</span> (extension storage, Firestore with change invalidation, Vertex AI context caching) saving ~5 cents per cached analysis. LLM observability with automated cost alerts.</li>
+        <li>Led team of 6 to ship production SaaS with tiered Stripe monetization and 4.7-star Chrome Web Store rating.</li>
+      </ul>
+    </div>
+
+    <div class="experience-item">
+      <div class="item-header">
+        <span class="job-title">Principal Investigator, AI Platform &amp; Infrastructure</span>
+        <span class="date-location">2022 - Sept 2025</span>
+      </div>
+      <div class="company-info">Atlas Defense Systems - Enterprise AI Organization (1,000+ engineers)</div>
+      <ul class="bullet-list">
+        <li>Led and operationalized <span class="highlight">AI-first transformation</span> for 1,000+ person organization: deployed 8 H100 GPU servers, production RAG systems, and transcription services - reducing analysis time from weeks to minutes.</li>
+        <li>Founded AI incubator coordinating 20 PIs across 5 departments, producing <span class="highlight">5+ shipping AI projects</span> showcased command-wide. Mentored senior engineers on LLM evaluation and production AI.</li>
+        <li>Built <span class="highlight">core AI platform primitives</span> (inference infrastructure, containerized pipelines, coding assistants) enabling every department to adopt LLM workflows independently. Briefed VADM and RADM leadership on roadmaps.</li>
+      </ul>
+    </div>
+
+    <div class="experience-item">
+      <div class="item-header">
+        <span class="job-title">Software Engineering Lead &amp; ML Researcher</span>
+        <span class="date-location">2019 - 2022</span>
+      </div>
+      <div class="company-info">Atlas Defense Systems</div>
+      <ul class="bullet-list">
+        <li><span class="highlight">Scaled analysis capacity 100x</span> by modernizing data pipelines (MongoDB + Tableau) and leading engineering team through Scrum adoption.</li>
+        <li>Built Transformer framework for automated track matching across 10,000+ datasets. Presented at Applied ML Conf conference.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Technical Projects</h2>
+    <div class="project-item">
+      <span class="project-name"><a class="inline-link" href="https://docrank.example.com">DocRank Intelligence Platform</a>:</span> Full-stack platform processing 1.38M public-record documents with entity co-mention analysis and AI-powered triage. 105K+ search impressions in first month. Zero-cost local LLM inference for privacy-preserving classification.
+    </div>
+    <div class="project-item">
+      <span class="project-name"><a class="inline-link" href="https://github.com/example/Real_time_fallacy_detection">Real-time Speech Analysis</a>:</span> Whisper + GPT-4/LLaMA for logical fallacy detection in live speech. Cited in peer-reviewed research. <a class="inline-link" href="https://www.youtube.com/watch?v=I9ScRL_10So">Demo</a>.
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Education &amp; Credentials</h2>
+    <div class="item-header">
+      <span class="job-title">M.S. &amp; B.S. in Computer Science (Machine Learning)</span>
+      <span class="date-location">Dec 2019</span>
+    </div>
+    <div class="edu-school">State University &bull; GPA: 3.71 &bull; Honors</div>
+    <div class="cred-pills">
+      <span class="pill">AI Startup Accelerator (2025)</span>
+      <span class="pill">AI Startup School (2025)</span>
+      <span class="pill green">Active Security Clearance</span>
+    </div>
+  </section>
+</div></body>
+    </html>

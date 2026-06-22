@@ -1,0 +1,276 @@
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&display=swap" rel="stylesheet">
+        <style>
+    .resume-container {
+      font-family: 'Google Sans Text', 'Product Sans', 'Roboto', Arial, sans-serif;
+      color: #202124;
+      line-height: 1.5;
+      width: 816px;
+      box-sizing: border-box;
+      padding: 16px 36px 12px;
+      background: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #4285f4;
+    }
+    .header-left { flex: 1; }
+    h1 {
+      font-family: 'Google Sans', 'Product Sans', Arial, sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      margin: 0 0 2px 0;
+      color: #202124;
+      letter-spacing: -0.3px;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #5f6368;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+    .contact-info {
+      font-size: 10.5px;
+      color: #5f6368;
+      text-align: right;
+      line-height: 1.7;
+      white-space: nowrap;
+    }
+    .contact-info a, a {
+      color: #1a73e8;
+      text-decoration: none;
+    }
+    .summary {
+      font-size: 11px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f4 100%);
+      padding: 8px 14px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: #3c4043;
+      line-height: 1.5;
+      border-left: 4px solid #4285f4;
+    }
+    .section-title {
+      font-family: 'Google Sans', 'Product Sans', Arial, sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #1a73e8;
+      border-bottom: 1.5px solid #e8eaed;
+      padding-bottom: 3px;
+      margin-top: 6px;
+      margin-bottom: 5px;
+      letter-spacing: 1.2px;
+    }
+    .experience-item { margin-bottom: 6px; }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .job-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #202124;
+    }
+    .company-info {
+      font-size: 11px;
+      font-weight: 500;
+      color: #1a73e8;
+      margin-top: 0;
+    }
+    .date-location {
+      font-size: 10.5px;
+      color: #80868b;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .bullet-list {
+      margin-top: 4px;
+      margin-bottom: 0;
+      padding-left: 18px;
+    }
+    .bullet-list li {
+      font-size: 10.8px;
+      margin-bottom: 1px;
+      color: #3c4043;
+      line-height: 1.38;
+    }
+    .bullet-list li::marker { color: #4285f4; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
+      margin-bottom: 6px;
+    }
+    .skill-category {
+      font-size: 10.5px;
+      color: #3c4043;
+      line-height: 1.45;
+    }
+    .skill-label {
+      font-weight: 700;
+      color: #202124;
+      font-size: 10.5px;
+    }
+    .project-item {
+      font-size: 10.8px;
+      color: #3c4043;
+      margin-bottom: 6px;
+      padding-left: 18px;
+      line-height: 1.5;
+    }
+    .project-name {
+      font-size: 10.8px;
+      font-weight: 700;
+      color: #202124;
+    }
+    .highlight {
+      font-weight: 700;
+      color: #1a73e8;
+    }
+    .cred-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .pill {
+      font-size: 10px;
+      font-weight: 500;
+      color: #1a73e8;
+      background: #e8f0fe;
+      border-radius: 12px;
+      padding: 3px 10px;
+      display: inline-block;
+    }
+    .pill.green {
+      color: #137333;
+      background: #e6f4ea;
+    }
+    .edu-school {
+      font-size: 11px;
+      font-weight: 500;
+      color: #1a73e8;
+      margin-top: 1px;
+    }
+    @media print {
+      .resume-container {
+        padding: 0;
+        width: 100%;
+      }
+    }
+  </style>
+      </head>
+      <body><div class="resume-container">
+  <header class="header">
+    <div class="header-left">
+      <h1>Jordan A. Reyes</h1>
+      <div class="subtitle">Partner Solutions Architect &bull; Sovereign Cloud &amp; AI &bull; Active Security Clearance</div>
+    </div>
+    <div class="contact-info">
+      jordan.reyes@example.com<br>
+      555-018-2940 &bull; Seattle, WA<br>
+      <a href="https://linkedin.com/in/example">LinkedIn</a> &bull; <a href="https://github.com/example">GitHub</a>
+    </div>
+  </header>
+
+  <section class="summary">Partner-facing cloud and AI solutions architect with 7+ years designing production systems across ISV, startup, and regulated enterprise environments. <strong>Active Security Clearance.</strong> Built sovereign-style AI infrastructure for a 1,000+ person organization across air-gapped classified and unclassified networks, then applied that operator experience as CTO of an ISV in <strong>Google&rsquo;s AI Startup Program</strong> shipping agent-first products on the Gemini Enterprise Agent Platform (ADK, A2A, MCP), with depth in containers, security, networking, and reusable enablement assets.</section>
+
+  <section>
+    <h2 class="section-title">Core Expertise</h2>
+    <div class="skills-grid">
+      <div class="skill-category"><span class="skill-label">Sovereign Cloud &amp; Regulated Environments:</span> Active Security Clearance, air-gapped AI deployment, classified and unclassified networks, US-only data residency, operating within DoD RMF/ATO-accredited environments (NIST 800-53), PII anonymization</div>
+      <div class="skill-category"><span class="skill-label">AI Agents &amp; Agentic Workflows:</span> Google ADK, A2A protocol, MCP tool integration, multi-agent orchestration, Gemini Enterprise Agent Platform, formerly Vertex AI (Deployments, Agent Garden, Gateway, Registry, Identity, Model Armor, Observability)</div>
+      <div class="skill-category"><span class="skill-label">Cloud Solutions Architecture:</span> Google Cloud (Agent Platform, Firestore, Cloud Run, Firebase, GKE), containerization (Docker, Podman, Kubernetes), security and networking design, reference architecture authorship, integration patterns</div>
+      <div class="skill-category"><span class="skill-label">Programming &amp; ML:</span> Python (7+ yrs), TypeScript, Java, PyTorch, TensorFlow, SQL/NoSQL, FastAPI, Next.js. vLLM, llama.cpp, oMLX (core contributor). RAG pipelines, fine-tuning (QLoRA)</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Professional Experience</h2>
+
+    <div class="experience-item">
+      <div class="item-header">
+        <span class="job-title">CTO &amp; Cloud Solutions Architect</span>
+        <span class="date-location">March 2025 to Present</span>
+      </div>
+      <div class="company-info"><a href="https://northwind.ai">Northwind AI</a> (ISV, <span class="highlight">AI Startup Accelerator 2025</span>)</div>
+      <ul class="bullet-list">
+        <li>Built and operate an ISV portfolio on <span class="highlight">Google Cloud</span> (Agent Platform, Firestore, Cloud Run, Firebase): TalentFlow (recruitment SaaS, paying subscribers), ClarityLens (Chrome Web Store, 4.7-star), and <a href="https://visible.ai">VisibleAI</a> (production AI-readiness assessment for Generative Engine Optimization).</li>
+        <li>Core contributor to <span class="highlight">oMLX</span> open-source inference runtime: VLM prefix cache <span class="highlight">14% to 84.4%</span> on multi-image agent workflows (v0.3.5), Gemma 4 tool-calling fix, Pi launcher integration.</li>
+        <li>Shipped a live <span class="highlight">ADK multi-agent system on Agent Platform Deployments</span> (formerly Agent Engine), invoked over <span class="highlight">A2A</span> from Cloud Functions: a planner agent builds a region &times; service query grid, N search-grounded recommender agents fan out in parallel simulating customers&rsquo; AI assistants, surfacing mention rate, ranked competitors, and per-region visibility gaps. Per-assessment Gemini cost ledger in Firestore.</li>
+        <li>Built reusable reference-architecture assets: a multi-client website engine (one typed config renders any AI-visible client site on Firebase multi-site Hosting) and agent-readiness audits.</li>
+      </ul>
+    </div>
+
+    <div class="experience-item">
+      <div class="item-header">
+        <span class="job-title">Technical Lead, AI Platform (concurrent)</span>
+        <span class="date-location">March 2025 to Present</span>
+      </div>
+      <div class="company-info"><a href="https://claritylens.com">ClarityLens</a></div>
+      <ul class="bullet-list">
+        <li>Designed two-stage parallel inference pipeline on <span class="highlight">Gemini Flash/Pro</span> with hybrid model routing and multi-tier caching: 3-min sequential analysis collapsed to 10-sec parallel. Led 6-engineer team through launch and Stripe-tiered monetization.</li>
+      </ul>
+    </div>
+
+    <div class="experience-item">
+      <div class="item-header">
+        <span class="job-title">Principal Investigator for Generative AI Innovation</span>
+        <span class="date-location">2022 to Sept 2025</span>
+      </div>
+      <div class="company-info">Atlas Defense Systems</div>
+      <ul class="bullet-list">
+        <li>Built an air-gapped AI environment with operational concerns matching sovereign cloud: data residency, secure networking, regulated access. 8 H100 GPU servers + 18 RTX A6000 accelerators across <span class="highlight">classified and unclassified networks</span> for a 1,000+ person organization; 100+ analysts on LLM toolchains still in daily use post-departure.</li>
+        <li>Cleared adoption blockers: RAG over Confluence (hours to minutes), Whisper transcription for fleet events, LLM-integrated VS Code in air-gapped environments.</li>
+        <li>Founded <span class="highlight">AI Incubator</span>: coordinated 15 PIs across 4 departments, 5+ shipped projects as repeatable assets. Executive briefings to senior agency leadership (the agency) and agency executives; multiple On-the-Spot awards.</li>
+      </ul>
+    </div>
+
+    <div class="experience-item">
+      <div class="item-header">
+        <span class="job-title">Software Lead, Performance Assessment</span>
+        <span class="date-location">2019 to 2022</span>
+      </div>
+      <div class="company-info">Atlas Defense Systems</div>
+      <ul class="bullet-list">
+        <li>Led 5 to 6 engineer team; <span class="highlight">scaled analysis capacity 100x</span> modernizing manual workflows into operational pipelines over terabyte-scale outputs. <span class="highlight">20x+ performance gains</span> via Python/Java multiprocessing; reduced runtime complexity O(N&#179;) to O(N log N) on production tools.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Selected Technical Projects</h2>
+    <div class="project-item">
+      <span class="project-name">Cadence + Document Intelligence Pipeline:</span> Vendor-agnostic multi-agent framework with 8-step orchestration; production RAG over <span class="highlight">1.38M documents</span> with editor-agent verification gate and citation audits; <span class="highlight">105K+ Google search impressions</span> first month.
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Education &amp; Credentials</h2>
+    <div class="item-header">
+      <span class="job-title">M.S. &amp; B.S. in Computer Science (Machine Learning emphasis)</span>
+      <span class="date-location">Dec 2019</span>
+    </div>
+    <div class="edu-school">State University &bull; GPA: 3.71 &bull; Graduated with Honors</div>
+    <div class="cred-pills">
+      <span class="pill green">Active Security Clearance</span>
+      <span class="pill">AI Startup Accelerator (2025)</span>
+      <span class="pill">AI Startup School (2025)</span>
+      <span class="pill">oMLX Core Contributor (v0.3.5)</span>
+      <span class="pill">Applied ML Conf Conference Presenter (2021)</span>
+    </div>
+  </section>
+</div></body>
+    </html>

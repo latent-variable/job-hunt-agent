@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #f2efe8; }
+
+:root {
+  --navy: #0f2233;
+  --navy-soft: #1a3249;
+  --gold: #b7892f;
+  --gold-soft: #efe2bf;
+  --rose: #9d3b47;
+  --paper: #fffdf8;
+  --ink: #1f2933;
+  --muted: #56616b;
+  --light: #7b8790;
+  --border: #ddd4c4;
+  --panel: #f7f1e6;
+}
+
+.resume-container {
+  width: 816px;
+  min-height: 1056px;
+  padding: 24px 34px 9px;
+  background:
+    radial-gradient(circle at top right, rgba(183, 137, 47, 0.12), transparent 28%),
+    linear-gradient(180deg, #fffdf9 0%, #fffaf2 100%);
+  color: var(--ink);
+  font-family: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.resume-container::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 86px;
+  background: linear-gradient(135deg, var(--navy) 0%, #17314a 62%, var(--rose) 100%);
+  z-index: 0;
+}
+
+.resume-container::after {
+  content: "";
+  position: absolute;
+  top: 86px;
+  left: 34px;
+  right: 34px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, #d6bc79 40%, rgba(214, 188, 121, 0.1) 100%);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: #fff9ef;
+  margin-bottom: 16px;
+}
+
+.name-block {
+  max-width: 570px;
+}
+
+h1 {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 10.1px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+  text-transform: uppercase;
+  color: #f2dfb2;
+  white-space: nowrap;
+}
+
+.contact {
+  text-align: right;
+  font-size: 9.2px;
+  line-height: 1.55;
+  color: #f9f2e3;
+}
+
+.contact a {
+  color: #f2dfb2;
+  text-decoration: none;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.summary-card,
+.signal-card {
+  background: rgba(255, 252, 245, 0.96);
+  border: 1px solid rgba(221, 212, 196, 0.95);
+  border-radius: 12px;
+  padding: 9px 12px;
+  box-shadow: 0 10px 24px rgba(15, 34, 51, 0.06);
+}
+
+.summary-card {
+  font-size: 10.45px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.summary-card strong,
+.signal-line strong {
+  color: var(--navy);
+}
+
+.signal-card {
+  display: grid;
+  gap: 5px;
+  align-content: start;
+  background: linear-gradient(180deg, #fffcf5 0%, #f7f0e1 100%);
+}
+
+.signal-kicker {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--rose);
+  font-weight: 800;
+}
+
+.signal-line {
+  font-size: 9.55px;
+  line-height: 1.32;
+  color: var(--muted);
+}
+
+.section-title {
+  margin: 4px 0 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.2px;
+  text-transform: uppercase;
+  letter-spacing: 1.45px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.section-title::before {
+  content: "";
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--rose));
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 16px;
+  padding: 9px 11px 8px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.skill {
+  font-size: 9.8px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.skill-label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 9.7px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.55px;
+  color: var(--navy-soft);
+}
+
+.experience-item {
+  margin-bottom: 6px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.job-title {
+  font-size: 11.45px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.date-location {
+  font-size: 9.95px;
+  color: var(--light);
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.company {
+  margin-top: 1px;
+  font-size: 10.2px;
+  color: var(--rose);
+  font-weight: 700;
+}
+
+.company a,
+.project a,
+.education a,
+a.inline-link {
+  color: var(--rose);
+  text-decoration: none;
+}
+
+.bullets {
+  margin: 3px 0 0;
+  padding-left: 17px;
+}
+
+.bullets li {
+  margin-bottom: 2px;
+  font-size: 9.85px;
+  line-height: 1.34;
+  color: var(--muted);
+}
+
+.bullets li::marker {
+  color: var(--gold);
+}
+
+.highlight {
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+}
+
+.project {
+  font-size: 9.8px;
+  line-height: 1.4;
+  color: var(--muted);
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 253, 248, 0.92);
+}
+
+.project-name {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 10.35px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.education {
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.edu-line {
+  font-size: 9.8px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.edu-line strong {
+  color: var(--ink);
+}
+
+.pills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 8px;
+}
+
+.pill {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: var(--navy-soft);
+  font-size: 9.7px;
+  font-weight: 700;
+  border: 1px solid rgba(183, 137, 47, 0.22);
+  text-align: center;
+}
+
+@media print {
+  html, body { background: #fff; }
+  .resume-container {
+    width: 100%;
+    min-height: auto;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <div class="resume-container">
+      <div class="content">
+        <header class="header">
+          <div class="name-block">
+            <h1>Jordan A. Reyes</h1>
+            <div class="subtitle">Principal AI Engineer | Agentic Systems | RAG | Enterprise Decision Platforms</div>
+          </div>
+          <div class="contact">
+            jordan.reyes@example.com<br>
+            555-018-2940 • Seattle, WA<br>
+            <a href="https://linkedin.com/in/example">LinkedIn</a> •
+            <a href="https://github.com/example">GitHub</a>
+          </div>
+        </header>
+
+        <section class="summary">
+          <div class="summary-card">
+            <strong>Principal AI engineer and architect with 7+ years building production-grade agentic AI systems for large-scale, data-intensive applications</strong>. Experience leading enterprise AI adoption, designing multi-agent workflows with orchestrator-driven delegation, architecting RAG and knowledge-graph-backed decision systems, and building automated evaluation frameworks that improve reliability at scale. Proven record translating ambiguous stakeholder needs into deployed, containerized, observable systems used in real operational environments. Active Security Clearance.
+          </div>
+          <div class="signal-card">
+            <div class="signal-kicker">Decision Systems at Scale</div>
+            <div class="signal-line"><strong>Multi-agent orchestration:</strong> designed systems with orchestrator-driven delegation, agent-to-agent handoffs, and cross-step execution planning for complex decision workflows.</div>
+            <div class="signal-line"><strong>Production RAG pipelines:</strong> architecting semantic retrieval over 1.38M+ documents with chunking strategies, vector databases, and uncertainty-aware outputs.</div>
+            <div class="signal-line"><strong>Enterprise reliability:</strong> led AI transformation for 1,000+ person organization, deploying 5+ production systems used daily by 100+ analysts.</div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Core Qualifications</div>
+          <div class="skills-grid">
+            <div class="skill"><span class="skill-label">Agentic Systems</span>Multi-agent orchestration, orchestrator-driven delegation, agent-to-agent handoffs, function calling, Model Context Protocol (MCP) servers, tool-mediated workflows</div>
+            <div class="skill"><span class="skill-label">RAG &amp; Knowledge Graphs</span>Vector retrieval, embedding selection, chunking strategies, semantic memory layers, structured ontologies, entity resolution at scale</div>
+            <div class="skill"><span class="skill-label">Evaluation &amp; Reliability</span>Automated scoring frameworks, hallucination detection, calibration error measurement, multi-model comparison, production ML observability</div>
+            <div class="skill"><span class="skill-label">Data &amp; Infrastructure</span>Python, SQL, MongoDB, Docker, Kubernetes, CI/CD pipelines, GPU clusters, cloud (GCP, AWS), production sustainment</div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Professional Experience</div>
+
+          <div class="experience-item">
+            <div class="item-header">
+              <div class="job-title">Principal Investigator for Generative AI Innovation</div>
+              <div class="date-location">2022 – Sep 2025</div>
+            </div>
+            <div class="company">Atlas Defense Systems</div>
+            <ul class="bullets">
+              <li>Led enterprise AI adoption across a <span class="highlight">1,000+ person organization</span>, standing up 8 H100 servers and 18 RTX A6000 GPUs plus the complete toolchain for production ML systems used daily by 100+ analysts.</li>
+              <li>Architected <span class="highlight">multi-agent decision workflows with orchestrator-driven delegation, tool-mediated execution, and API-integrated agent interfaces</span> for real-time data access, retrieval, transcription, coding assistance, and multi-step reasoning.</li>
+              <li>Designed <span class="highlight">RAG-powered knowledge systems</span> over 1.38M+ records with semantic search, chunking strategies, and vector databases, reducing document retrieval from hours to minutes.</li>
+              <li>Built <span class="highlight">automated evaluation frameworks</span> measuring capability boundaries, calibration error, latency, and cost across 7+ model configurations to enable model selection based on reliability rather than benchmark performance alone.</li>
+              <li>Integrating heterogeneous enterprise data sources into unified retrieval and reasoning pipelines, normalizing structured and unstructured data for downstream decision-support workflows.</li>
+              <li>Led architecture design reviews, defined system boundaries, and guided implementation across cross-department stakeholders, translating ambiguous mission requirements into scoped, multi-phase technical delivery plans.</li>
+              <li>Deployed <span class="highlight">containerized AI services with CI/CD, observability, and production sustainment</span> across secure, operationally constrained environments.</li>
+            </ul>
+          </div>
+
+          <div class="experience-item">
+            <div class="item-header">
+              <div class="job-title">Software Lead, Performance Assessment</div>
+              <div class="date-location">2020 – 2022</div>
+            </div>
+            <div class="company">Atlas Defense Systems</div>
+            <ul class="bullets">
+              <li>Transformed intractable manual workflows into <span class="highlight">operational decision-support pipelines</span> handling hundreds of engagement runs per week over terabyte-scale modeling and simulation outputs.</li>
+              <li>Built end-to-end Python/Java ingestion, metric-generation, and reporting systems with MongoDB and Tableau, creating <span class="highlight">continuous feedback loops for operational decision-making</span>.</li>
+              <li>Hardened pipelines against <span class="highlight">schema drift, malformed logs, and partial event captures</span>, with human-review checkpoints when upstream changes required code updates.</li>
+              <li>Instrumented runtime, throughput, completion-rate, and data-integrity monitoring while hardening pipelines against schema drift, malformed logs, and partial event captures.</li>
+            </ul>
+          </div>
+
+          <div class="experience-item">
+            <div class="item-header">
+              <div class="job-title">Co-Founder &amp; Lead Architect</div>
+              <div class="date-location">Mar 2025 – Present</div>
+            </div>
+            <div class="company"><a class="inline-link" href="https://northwind.ai">Northwind AI</a></div>
+            <ul class="bullets">
+              <li>Architected <a class="inline-link" href="https://continuum.northwind.ai">Cadence</a>: orchestrator-driven multi-agent workflows with autonomous tool use, validation loops, and cross-step execution planning for multimedia content generation.</li>
+              <li>Built <a class="inline-link" href="https://shoreline.northwind.ai">Lighthouse</a>: automated evaluation and scoring framework measuring capability boundaries, calibration error, overconfidence, latency, and cost across production LLMs.</li>
+              <li>Architected <a class="inline-link" href="https://adjutant.northwind.ai">TalentFlow</a>: decision-support platform with real-time scoring engines operating on continuously updated signals for low-latency decisioning over dynamic data.</li>
+              <li>Built and operated <span class="highlight">production AI systems with real-time scoring, observability, and cost monitoring</span>, supporting continuous decision workflows over dynamic data streams.</li>
+            </ul>
+          </div>
+
+        </section>
+
+        <section>
+          <div class="section-title">Selected Projects</div>
+          <div class="projects">
+            <div class="project">
+              <span class="project-name">Multi-Agent Document Intelligence Pipeline</span>
+              RAG-powered semantic search across 1.38M+ documents with cross-volume timeline construction, entity co-mention networks, and editorial verification gates for source-cited investigative output.
+            </div>
+            <div class="project">
+              <span class="project-name">Real-Time Speech Analysis</span>
+              Integrated Whisper with LLMs for identifying logical fallacies in live speech; cited in peer-reviewed academic research (peer-reviewed research).
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Education &amp; Credentials</div>
+          <div class="education">
+            <div class="edu-line">
+              <strong>M.S. + B.S. Computer Science, Machine Learning Emphasis</strong><br>
+              State University, Dec 2019
+            </div>
+            <div class="pills">
+              <span class="pill">Principal-Level Scope</span>
+              <span class="pill">Production Systems</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
