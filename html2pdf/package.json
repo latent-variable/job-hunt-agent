@@ -1,0 +1,17 @@
+{
+  "name": "job-application-agent-html2pdf",
+  "version": "1.0.0",
+  "description": "HTML resume to PDF converter using puppeteer-core with system Chrome",
+  "main": "index.js",
+  "scripts": {
+    "render": "node html-to-pdf.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "puppeteer-core": "^24.40.0"
+  }
+}

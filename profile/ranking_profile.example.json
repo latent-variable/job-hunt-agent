@@ -1,0 +1,17 @@
+{
+  "_comment": "Copy this to ranking_profile.json (onboarding does it for you) and edit to match your CV. Any key you omit keeps the generic default in tools/rank_jobs.py. Lists are case-insensitive.",
+  "skills": [
+    "python", "go", "rust", "kubernetes", "postgres", "react", "aws", "llm", "rag"
+  ],
+  "experience_keywords": [
+    "production", "distributed systems", "scale", "leadership", "end-to-end", "shipping"
+  ],
+  "target_seniority": ["senior", "staff+", "lead"],
+  "years_experience": 8,
+  "direct_role_signals": [
+    "software engineer", "backend engineer", "ai engineer", "ml engineer"
+  ],
+  "builder_role_signals": [
+    "staff engineer", "principal engineer", "tech lead", "architect", "founding engineer"
+  ]
+}

@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+html2pdf/node_modules/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Scan results (regenerable, can be large)
+data/scan_results/
+
+# Editor
+.vscode/
+.idea/

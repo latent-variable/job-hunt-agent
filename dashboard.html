@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Application Agent - Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/favicon/site.webmanifest">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #242834;
+  --border: #2e3348;
+  --text: #e4e4e7;
+  --text-muted: #9ca3af;
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --green: #22c55e;
+  --green-bg: rgba(34,197,94,0.12);
+  --yellow: #eab308;
+  --yellow-bg: rgba(234,179,8,0.12);
+  --red: #ef4444;
+  --red-bg: rgba(239,68,68,0.12);
+  --blue: #3b82f6;
+  --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316;
+  --orange-bg: rgba(249,115,22,0.12);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+a { color: var(--accent-light); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Layout */
+.app { max-width: 1400px; margin: 0 auto; padding: 20px; }
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 0; margin-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+.header h1 { font-size: 22px; font-weight: 700; }
+.header h1 span { color: var(--accent-light); }
+.header-actions { display: flex; gap: 10px; align-items: center; }
+.header-actions .meta { font-size: 13px; color: var(--text-muted); }
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.filter-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.filter-select {
+  min-width: 180px;
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 13px;
+}
+.filter-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Tabs */
+.tabs { display: flex; gap: 2px; margin-bottom: 20px; background: var(--surface); border-radius: 10px; padding: 4px; }
+.tab {
+  padding: 10px 20px; border-radius: 8px; cursor: pointer;
+  font-size: 14px; font-weight: 500; color: var(--text-muted);
+  transition: all 0.15s;
+}
+.tab:hover { color: var(--text); }
+.tab.active { background: var(--accent); color: white; }
+.tab .badge {
+  display: inline-block; background: rgba(255,255,255,0.2); border-radius: 10px;
+  padding: 1px 8px; font-size: 12px; margin-left: 6px;
+}
+
+/* Cards */
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px; margin-bottom: 16px;
+}
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.card-title { font-size: 16px; font-weight: 600; }
+.card-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+/* Stats row */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px;
+}
+.stat-value { font-size: 28px; font-weight: 700; }
+.stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+/* Score bar */
+.score-bar-container { display: flex; align-items: center; gap: 8px; }
+.score-bar {
+  flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden;
+}
+.score-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+.score-value { font-size: 13px; font-weight: 600; min-width: 42px; text-align: right; }
+
+/* Job list */
+.job-list { display: flex; flex-direction: column; gap: 8px; }
+.job-row {
+  display: grid;
+  grid-template-columns: 50px 1fr 180px 120px 100px;
+  align-items: center; gap: 12px;
+  padding: 14px 16px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; cursor: pointer; transition: border-color 0.15s;
+}
+.job-row:hover { border-color: var(--accent); }
+.job-row.expanded { border-color: var(--accent); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.job-rank { font-size: 16px; font-weight: 700; color: var(--text-muted); text-align: center; }
+.job-title-col .title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.job-title-col .company { font-size: 12px; color: var(--text-muted); }
+.copy-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border: none; border-radius: 4px;
+  background: transparent; color: var(--text-muted); cursor: pointer;
+  flex-shrink: 0; font-size: 13px; transition: all 0.15s;
+}
+.copy-btn:hover { background: var(--surface2); color: var(--accent-light); }
+.copy-btn.copied { color: var(--green); }
+.job-location { font-size: 13px; color: var(--text-muted); }
+.job-salary { font-size: 13px; font-weight: 600; color: var(--green); }
+.job-score { font-size: 18px; font-weight: 700; }
+.job-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.job-actions .btn { white-space: nowrap; font-size: 11px; padding: 4px 8px; }
+
+/* Job detail panel */
+.job-detail {
+  background: var(--surface2); border: 1px solid var(--accent); border-top: none;
+  border-radius: 0 0 10px 10px; padding: 20px; margin-top: -8px; margin-bottom: 8px;
+}
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.detail-section h4 { font-size: 12px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 8px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill-tag {
+  font-size: 11px; padding: 3px 10px; border-radius: 12px;
+  background: var(--blue-bg); color: var(--blue); font-weight: 500;
+}
+.skill-tag.missing { background: var(--red-bg); color: var(--red); }
+.skill-tag.matched { background: var(--green-bg); color: var(--green); }
+.score-breakdown { display: flex; flex-direction: column; gap: 6px; }
+.score-row { display: flex; align-items: center; gap: 8px; }
+.score-row label { font-size: 12px; color: var(--text-muted); min-width: 80px; }
+
+/* Applications table */
+.app-table { width: 100%; border-collapse: collapse; }
+.app-table th {
+  text-align: left; padding: 10px 12px; font-size: 12px; text-transform: uppercase;
+  color: var(--text-muted); letter-spacing: 0.5px; border-bottom: 1px solid var(--border);
+}
+.app-table td { 
+  padding: 12px; 
+  border-bottom: 1px solid var(--border); 
+  font-size: 14px; 
+  vertical-align: top;
+}
+.app-table tr:hover td { background: var(--surface2); }
+.app-table td:nth-child(5) { 
+  /* Resume path column - wrap text */
+  word-break: break-all;
+  word-wrap: break-word;
+  max-width: 400px;
+  line-height: 1.4;
+}
+
+/* Status badges */
+.status {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  font-size: 12px; font-weight: 600; text-transform: capitalize;
+}
+.status-applied { background: var(--blue-bg); color: var(--blue); }
+.status-researching { background: var(--yellow-bg); color: var(--yellow); }
+.status-tailoring { background: var(--orange-bg); color: var(--orange); }
+.status-screening, .status-interviewing { background: var(--green-bg); color: var(--green); }
+.status-offer { background: var(--green-bg); color: var(--green); font-weight: 700; }
+.status-rejected { background: var(--red-bg); color: var(--red); }
+.status-withdrawn { background: var(--red-bg); color: var(--red); opacity: 0.7; }
+
+/* Buttons */
+.btn {
+  padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface2); color: var(--text); cursor: pointer;
+  font-size: 13px; font-weight: 500; transition: all 0.15s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent-light); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-light); }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+
+/* Company grid */
+.company-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.company-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px;
+}
+.company-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.company-card .meta { font-size: 12px; color: var(--text-muted); }
+.company-card .platform-badge {
+  display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 8px;
+  background: var(--surface2); color: var(--text-muted); font-weight: 500;
+}
+
+/* Panel hidden */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* Empty state */
+.empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.empty h3 { margin-bottom: 8px; color: var(--text); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .job-row { grid-template-columns: 40px 1fr 100px; }
+  .job-location, .job-salary, .job-actions { display: none; }
+  .detail-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1><span>Job Application</span> Dashboard</h1>
+    <div class="header-actions">
+      <span class="meta" id="scan-meta"></span>
+      <div class="filter-group">
+        <label class="filter-label" for="company-filter">Company</label>
+        <select id="company-filter" class="filter-select" onchange="setCompanyFilter(this.value)">
+          <option value="all">All companies</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="rescan()">Re-scan Jobs</button>
+    </div>
+  </div>
+
+  <div id="stats" class="stats"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="matches" onclick="switchTab('matches')">
+      Job Matches <span class="badge" id="matches-count">0</span>
+    </div>
+    <div class="tab" data-tab="applications" onclick="switchTab('applications')">
+      Applications <span class="badge" id="apps-count">0</span>
+    </div>
+    <div class="tab" data-tab="companies" onclick="switchTab('companies')">
+      Companies <span class="badge" id="companies-count">0</span>
+    </div>
+    <div class="tab" data-tab="dismissed" onclick="switchTab('dismissed')">
+      Dismissed <span class="badge" id="dismissed-count">0</span>
+    </div>
+  </div>
+
+  <!-- Job Matches Panel -->
+  <div id="panel-matches" class="panel active">
+    <div id="job-list" class="job-list"></div>
+  </div>
+
+  <!-- Applications Panel -->
+  <div id="panel-applications" class="panel">
+    <table class="app-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Role</th>
+          <th>Date Applied</th>
+          <th>Status</th>
+          <th>Resume</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="app-table-body"></tbody>
+    </table>
+    <div id="apps-empty" class="empty" style="display:none">
+      <h3>No applications yet</h3>
+      <p>Apply to jobs from the Matches tab to start tracking.</p>
+    </div>
+  </div>
+
+  <!-- Companies Panel -->
+  <div id="panel-companies" class="panel">
+    <div id="company-grid" class="company-grid"></div>
+  </div>
+
+  <!-- Dismissed Jobs Panel -->
+  <div id="panel-dismissed" class="panel">
+    <div id="dismissed-list" class="job-list"></div>
+  </div>
+</div>
+
+<script>
+const API = '';  // Same origin
+
+let state = {
+  scan: null,
+  applications: null,
+  companies: null,
+  expandedJob: null,
+  selectedCompany: 'all',
+};
+
+// ── Data Loading ──
+async function loadAll() {
+  const [scan, apps, companies] = await Promise.all([
+    fetch(`${API}/api/scan/latest`).then(r => r.json()),
+    fetch(`${API}/api/applications`).then(r => r.json()),
+    fetch(`${API}/api/companies`).then(r => r.json()),
+  ]);
+  state.scan = scan;
+  state.applications = apps;
+  state.companies = companies;
+  render();
+}
+
+// ── Rendering ──
+function render() {
+  renderCompanyFilter();
+  renderStats();
+  renderJobList();
+  renderApplications();
+  renderCompanies();
+  renderDismissed();
+  updateBadges();
+}
+
+function getCompanyOptions() {
+  const jobs = state.scan?.all_results || state.scan?.top_results || [];
+  const scanCompanies = jobs.map(job => job.company).filter(Boolean);
+  const trackedCompanies = (state.companies?.companies || []).map(c => c.name);
+  return [...new Set([...scanCompanies, ...trackedCompanies])].sort();
+}
+
+function getAllRankedJobs() {
+  return state.scan?.all_results || state.scan?.top_results || [];
+}
+
+function getVisibleJobs() {
+  const allJobs = getAllRankedJobs();
+  if (state.selectedCompany === 'all') return allJobs;
+  return allJobs.filter(job => job.company === state.selectedCompany);
+}
+
+function getAvailableJobs() {
+  const jobs = getVisibleJobs();
+  const applications = state.applications?.applications || [];
+  const dismissedJobs = state.applications?.dismissed || [];
+  const hiddenStatuses = new Set(['applied', 'screening', 'interviewing', 'offer']);
+  const appliedKeys = new Set(applications.filter(a => hiddenStatuses.has(a.status)).map(a => `${a.company}|${a.role}`));
+  return jobs.filter(job => {
+    const key = `${job.company}|${job.title}`;
+    return !appliedKeys.has(key) && !dismissedJobs.includes(key);
+  });
+}
+
+function getVisibleDismissedJobs() {
+  const dismissedKeys = state.applications?.dismissed || [];
+  return getVisibleJobs().filter(job => dismissedKeys.includes(`${job.company}|${job.title}`));
+}
+
+function renderCompanyFilter() {
+  const select = document.getElementById('company-filter');
+  const companies = getCompanyOptions();
+
+  if (state.selectedCompany !== 'all' && !companies.includes(state.selectedCompany)) {
+    state.selectedCompany = 'all';
+  }
+
+  select.innerHTML = [
+    '<option value="all">All companies</option>',
+    ...companies.map(company => `<option value="${esc(company)}">${esc(company)}</option>`),
+  ].join('');
+  select.value = state.selectedCompany;
+}
+
+function renderStats() {
+  const jobs = getVisibleJobs();
+  const apps = state.applications?.applications || [];
+  const companies = state.companies?.companies || [];
+
+  const applied = apps.filter(a => a.status === 'applied').length;
+  const interviewing = apps.filter(a => ['screening', 'interviewing'].includes(a.status)).length;
+  const avgScore = jobs.length ? (jobs.reduce((s, j) => s + j.overall_score, 0) / jobs.length) : 0;
+  const topSalary = Math.max(...jobs.map(j => parseSalary(j.salary)).filter(s => s > 0), 0);
+
+  document.getElementById('stats').innerHTML = `
+    <div class="stat">
+      <div class="stat-value" style="color: var(--accent-light)">${jobs.length}</div>
+      <div class="stat-label">Job Matches</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color: var(--blue)">${applied}</div>
+      <div class="stat-label">Applied</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color: var(--green)">${interviewing}</div>
+      <div class="stat-label">Interviewing</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">${(avgScore * 100).toFixed(0)}%</div>
+      <div class="stat-label">Avg Match Score</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color: var(--green)">${topSalary ? '$' + (topSalary/1000).toFixed(0) + 'K' : '-'}</div>
+      <div class="stat-label">Top Salary</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">${companies.length}</div>
+      <div class="stat-label">Companies Tracked</div>
+    </div>
+  `;
+
+  // Scan metadata
+  const scanMeta = document.getElementById('scan-meta');
+  if (state.scan?.scanned_at) {
+    const d = new Date(state.scan.scanned_at);
+    const companySuffix = state.selectedCompany === 'all' ? '' : ` | Filter: ${state.selectedCompany}`;
+    scanMeta.textContent = `Last scan: ${d.toLocaleDateString()} ${d.toLocaleTimeString()} (${state.scan.total_results} total)${companySuffix}`;
+  }
+}
+
+function renderJobList() {
+  const container = document.getElementById('job-list');
+  const filteredJobs = getAvailableJobs();
+
+  if (!filteredJobs.length) {
+    const companyText = state.selectedCompany === 'all' ? '' : ` for ${esc(state.selectedCompany)}`;
+    container.innerHTML = `<div class="empty"><h3>No available job matches${companyText}</h3><p>All jobs in this view have been applied to, dismissed, or filtered out. Click "Re-scan Jobs" to find new matches.</p></div>`;
+    return;
+  }
+
+  container.innerHTML = filteredJobs.map((job, i) => {
+    const rank = i + 1;
+    return `
+      <div class="job-row ${state.expandedJob === rank ? 'expanded' : ''}" onclick="toggleJob(${rank})">
+        <div class="job-rank">#${rank}</div>
+        <div class="job-title-col">
+          <div class="title">${esc(job.title)} <button class="copy-btn" title="Copy job title" data-copy="${escAttr(job.title)}" onclick="event.stopPropagation(); copyText(this.dataset.copy, this)">&#x2398;</button></div>
+          <div class="company">${esc(job.company)}</div>
+        </div>
+        <div class="job-location">${esc(truncate(job.location, 28))}</div>
+        <div class="job-salary">${job.salary || '-'}</div>
+        <div class="job-score" style="color: ${scoreColor(job.overall_score)}">${(job.overall_score * 100).toFixed(0)}%</div>
+        <div class="job-actions">
+          ${job.url ? `<a href="${esc(job.url)}" target="_blank" class="btn btn-sm" onclick="event.stopPropagation()">View</a>` : ''}
+          <button class="btn btn-sm" data-company="${escAttr(job.company)}" data-title="${escAttr(job.title)}" onclick="event.stopPropagation(); dismissJob(this.dataset.company, this.dataset.title)">Dismiss</button>
+        </div>
+      </div>
+      ${state.expandedJob === rank ? renderJobDetail(job) : ''}
+    `;
+  }).join('');
+}
+
+function renderJobDetail(job) {
+  const s = job.scores || {};
+  return `
+    <div class="job-detail">
+      <div class="detail-grid">
+        <div class="detail-section">
+          <h4>Score Breakdown</h4>
+          <div class="score-breakdown">
+            ${scoreBar('Skills', s.skill_match)}
+            ${s.role_alignment !== undefined ? scoreBar('Role', s.role_alignment) : ''}
+            ${scoreBar('Experience', s.experience)}
+            ${scoreBar('Seniority', s.seniority)}
+            ${scoreBar('Location', s.location)}
+          </div>
+        </div>
+        <div class="detail-section">
+          <h4>Matched Skills</h4>
+          <div class="skill-tags">
+            ${(job.matched_skills || []).map(s => `<span class="skill-tag matched">${esc(s)}</span>`).join('')}
+          </div>
+          ${job.missing_skills?.length ? `
+            <h4 style="margin-top:12px">Missing Skills</h4>
+            <div class="skill-tags">
+              ${job.missing_skills.map(s => `<span class="skill-tag missing">${esc(s)}</span>`).join('')}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+      ${job.experience_hits?.length ? `
+        <div class="detail-section" style="margin-top: 16px">
+          <h4>Experience Keywords Matched</h4>
+          <div class="skill-tags">
+            ${job.experience_hits.map(s => `<span class="skill-tag">${esc(s)}</span>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+      ${job.role_hits?.length ? `
+        <div class="detail-section" style="margin-top: 16px">
+          <h4>Role Signals Matched</h4>
+          <div class="skill-tags">
+            ${job.role_hits.map(s => `<span class="skill-tag">${esc(s)}</span>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+      <div style="margin-top: 16px; display: flex; gap: 8px;">
+        ${job.url ? `<a href="${esc(job.url)}" target="_blank" class="btn btn-primary">Open Job Posting</a>` : ''}
+        <button class="btn" data-company="${escAttr(job.company)}" data-title="${escAttr(job.title)}" data-url="${escAttr(job.url || '')}" onclick="addToApplications(this.dataset.company, this.dataset.title, this.dataset.url)">Track Application</button>
+        <button class="btn" style="background: var(--red-bg); color: var(--red); border-color: var(--red)" data-company="${escAttr(job.company)}" data-title="${escAttr(job.title)}" onclick="dismissJob(this.dataset.company, this.dataset.title)">Not Interested</button>
+      </div>
+    </div>
+  `;
+}
+
+function scoreBar(label, value) {
+  const pct = ((value || 0) * 100).toFixed(0);
+  const color = value >= 0.8 ? 'var(--green)' : value >= 0.5 ? 'var(--yellow)' : 'var(--red)';
+  return `
+    <div class="score-row">
+      <label>${label}</label>
+      <div class="score-bar"><div class="score-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+      <span class="score-value">${pct}%</span>
+    </div>
+  `;
+}
+
+function renderApplications() {
+  const apps = state.applications?.applications || [];
+  const tbody = document.getElementById('app-table-body');
+  const empty = document.getElementById('apps-empty');
+
+  if (!apps.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = apps.map(app => `
+    <tr>
+      <td><strong>${esc(app.company)}</strong></td>
+      <td>${esc(app.role)}</td>
+      <td>${app.date_applied || '-'}</td>
+      <td>
+        <select class="status-select" onchange="updateAppStatus('${esc(app.id)}', this.value)" style="
+          background: var(--surface2); color: var(--text); border: 1px solid var(--border);
+          border-radius: 8px; padding: 4px 8px; font-size: 12px; cursor: pointer;
+        ">
+          ${['researching','tailoring','applied','screening','interviewing','offer','rejected','withdrawn']
+            .map(s => `<option value="${s}" ${app.status === s ? 'selected' : ''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td style="font-size:12px;color:var(--text-muted)">${esc(app.resume_version || '-')}</td>
+      <td style="font-size:13px">${esc(app.notes || '')}</td>
+    </tr>
+  `).join('');
+}
+
+function renderCompanies() {
+  const companies = state.companies?.companies || [];
+  const statusByCompany = new Map((state.scan?.company_status || []).map(item => [item.name, item]));
+  document.getElementById('company-grid').innerHTML = companies.map(c => `
+    <div class="company-card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3>${esc(c.name)}</h3>
+        <span class="platform-badge">${esc(c.platform || 'manual')}</span>
+      </div>
+      ${c.careers_url ? `<a href="${esc(c.careers_url)}" target="_blank" style="font-size:12px">${esc(c.careers_url)}</a>` : ''}
+      ${c.slug ? `<div class="meta" style="margin-top:4px">Slug: ${esc(c.slug)}</div>` : ''}
+      ${c.last_checked ? `<div class="meta">Last scanned: ${c.last_checked}</div>` : '<div class="meta">Not yet scanned</div>'}
+      ${renderCompanyScanStatus(statusByCompany.get(c.name))}
+      ${c.notes ? `<div class="meta" style="margin-top:4px">${esc(c.notes)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderCompanyScanStatus(status) {
+  if (!status) return '<div class="meta">Scan status: not included in latest dashboard scan</div>';
+  if (status.issue) {
+    return `<div class="meta" style="color:var(--yellow)">Scan status: ${esc(status.status)}${status.issue ? `, ${esc(status.issue)}` : ''}</div>`;
+  }
+  return `<div class="meta" style="color:var(--green)">Scan status: ok, ${status.result_count} matches</div>`;
+}
+
+function renderDismissed() {
+  const dismissedJobs = getVisibleDismissedJobs();
+  const container = document.getElementById('dismissed-list');
+
+  if (!dismissedJobs.length) {
+    const companyText = state.selectedCompany === 'all' ? '' : ` for ${esc(state.selectedCompany)}`;
+    container.innerHTML = `<div class="empty"><h3>No dismissed jobs${companyText}</h3><p>Jobs you mark as "Not Interested" will appear here.</p></div>`;
+    return;
+  }
+
+  container.innerHTML = dismissedJobs.map((job, i) => `
+    <div class="job-row ${state.expandedJob === `dismissed-${i}` ? 'expanded' : ''}" onclick="toggleDismissedJob(${i})">
+      <div class="job-rank">#${i + 1}</div>
+      <div class="job-title-col">
+        <div class="title">${esc(job.title)}</div>
+        <div class="company">${esc(job.company)}</div>
+      </div>
+      <div class="job-location">${esc(truncate(job.location, 28))}</div>
+      <div class="job-salary">${job.salary || '-'}</div>
+      <div class="job-score" style="color: ${scoreColor(job.overall_score)}">${(job.overall_score * 100).toFixed(0)}%</div>
+      <div class="job-actions">
+        <button class="btn btn-sm" style="background: var(--green-bg); color: var(--green)" data-company="${escAttr(job.company)}" data-title="${escAttr(job.title)}" onclick="event.stopPropagation(); restoreJob(this.dataset.company, this.dataset.title)">Restore</button>
+      </div>
+    </div>
+    ${state.expandedJob === `dismissed-${i}` ? renderJobDetail(job) : ''}
+  `).join('');
+}
+
+function restoreJob(company, title) {
+  const key = `${company}|${title}`;
+  const dismissedJobs = state.applications.dismissed || [];
+  const index = dismissedJobs.indexOf(key);
+  
+  if (index > -1) {
+    dismissedJobs.splice(index, 1);
+    state.applications.dismissed = dismissedJobs;
+    
+    fetch(`${API}/api/applications`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state.applications),
+    }).then(() => {
+      render();
+    });
+  }
+}
+
+function updateBadges() {
+  document.getElementById('matches-count').textContent = getAvailableJobs().length;
+  document.getElementById('apps-count').textContent = (state.applications?.applications || []).length;
+  document.getElementById('companies-count').textContent = (state.companies?.companies || []).length;
+  document.getElementById('dismissed-count').textContent = getVisibleDismissedJobs().length;
+}
+
+// ── Interactions ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === `panel-${tab}`));
+}
+
+function toggleJob(index) {
+  state.expandedJob = state.expandedJob === index ? null : index;
+  renderJobList();
+}
+
+function toggleDismissedJob(index) {
+  state.expandedJob = state.expandedJob === `dismissed-${index}` ? null : `dismissed-${index}`;
+  renderDismissed();
+}
+
+function setCompanyFilter(company) {
+  state.selectedCompany = company;
+  state.expandedJob = null;
+  render();
+}
+
+async function updateAppStatus(appId, newStatus) {
+  const apps = state.applications.applications;
+  const app = apps.find(a => a.id === appId);
+  if (app) {
+    app.status = newStatus;
+    await fetch(`${API}/api/applications`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state.applications),
+    });
+  }
+}
+
+function addToApplications(company, role, url) {
+  const apps = state.applications.applications || [];
+  const dismissedJobs = state.applications.dismissed || [];
+  const id = company.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + new Date().toISOString().slice(0,7);
+
+  // Check if already tracked
+  if (apps.find(a => a.company === company && a.role === role)) {
+    alert('Already tracking this application.');
+    return;
+  }
+
+  // Check if dismissed
+  const key = `${company}|${role}`;
+  if (dismissedJobs.includes(key)) {
+    alert('This job was previously dismissed.');
+    return;
+  }
+
+  apps.push({
+    id,
+    company,
+    role,
+    date_applied: null,
+    source_url: url,
+    status: 'researching',
+    resume_version: null,
+    notes: 'Added from dashboard',
+  });
+
+  state.applications.applications = apps;
+  fetch(`${API}/api/applications`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(state.applications),
+  }).then(() => {
+    render();
+    switchTab('applications');
+  });
+}
+
+function dismissJob(company, title) {
+  const key = `${company}|${title}`;
+  const dismissedJobs = state.applications.dismissed || [];
+  
+  if (!dismissedJobs.includes(key)) {
+    dismissedJobs.push(key);
+    state.applications.dismissed = dismissedJobs;
+    
+    fetch(`${API}/api/applications`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state.applications),
+    }).then(() => {
+      render();
+    });
+  }
+}
+
+function rescan() {
+  alert('Run this command in the terminal:\n\npython tools/pipeline.py scan -l "la" -n 30\n\nThen refresh this page.');
+}
+
+// ── Helpers ──
+function esc(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+function escAttr(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function truncate(str, len) { return str && str.length > len ? str.slice(0, len) + '...' : str || ''; }
+function scoreColor(score) {
+  if (score >= 0.85) return 'var(--green)';
+  if (score >= 0.7) return 'var(--yellow)';
+  return 'var(--red)';
+}
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '&#x2713;';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '&#x2398;'; }, 1500);
+  });
+}
+function parseSalary(s) {
+  if (!s) return 0;
+  const match = s.replace(/,/g, '').match(/\$?(\d+)/);
+  return match ? parseInt(match[1]) : 0;
+}
+
+// ── Init ──
+loadAll();
+</script>
+</body>
+</html>

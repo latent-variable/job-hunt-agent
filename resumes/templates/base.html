@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+/* ===== Clean Resume Theme ===== */
+/* Accent color: change --accent to retheme the entire resume */
+:root {
+  --accent: #4285f4;
+  --accent-light: #e8f0fe;
+  --accent-dark: #1a73e8;
+  --text-primary: #202124;
+  --text-secondary: #3c4043;
+  --text-muted: #5f6368;
+  --text-light: #80868b;
+  --border: #e8eaed;
+  --bg-subtle: #f8f9fa;
+  --bg-subtle-end: #f1f3f4;
+  --pill-green: #137333;
+  --pill-green-bg: #e6f4ea;
+}
+
+.resume-container {
+  font-family: 'Google Sans Text', 'Product Sans', 'Roboto', Arial, sans-serif;
+  color: var(--text-primary);
+  line-height: 1.5;
+  width: 816px;
+  box-sizing: border-box;
+  padding: 24px 36px 28px;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--accent);
+}
+.header-left { flex: 1; }
+h1 {
+  font-family: 'Google Sans', 'Product Sans', Arial, sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+.subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+.contact-info {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  text-align: right;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+.contact-info a {
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+/* Summary */
+.summary {
+  font-size: 11px;
+  background: linear-gradient(135deg, var(--bg-subtle) 0%, var(--bg-subtle-end) 100%);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  border-left: 4px solid var(--accent);
+}
+
+/* Section Titles */
+.section-title {
+  font-family: 'Google Sans', 'Product Sans', Arial, sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+  border-bottom: 1.5px solid var(--border);
+  padding-bottom: 3px;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  letter-spacing: 1.2px;
+}
+
+/* Experience Items */
+.experience-item { margin-bottom: 8px; }
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.job-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.company-info {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  margin-top: 0;
+}
+.date-location {
+  font-size: 10.5px;
+  color: var(--text-light);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Bullet Lists */
+.bullet-list {
+  margin-top: 4px;
+  margin-bottom: 0;
+  padding-left: 18px;
+}
+.bullet-list li {
+  font-size: 10.8px;
+  margin-bottom: 2px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.bullet-list li::marker { color: var(--accent); }
+
+/* Skills Grid */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  margin-bottom: 6px;
+}
+.skill-category {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+.skill-label {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 10.5px;
+}
+
+/* Projects */
+.project-item {
+  font-size: 10.8px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  padding-left: 18px;
+  line-height: 1.5;
+}
+.project-name {
+  font-size: 10.8px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Highlights */
+.highlight {
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+/* Credential Pills */
+.cred-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.pill {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  background: var(--accent-light);
+  border-radius: 12px;
+  padding: 3px 10px;
+  display: inline-block;
+}
+.pill.green {
+  color: var(--pill-green);
+  background: var(--pill-green-bg);
+}
+
+/* Education */
+.edu-school {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  margin-top: 1px;
+}
+
+/* Print */
+@media print {
+  .resume-container { padding: 0; width: 100%; }
+}
+    </style>
+  </head>
+  <body>
+    <div class="resume-container">
+
+      <header class="header">
+        <div class="header-left">
+          <h1><!-- YOUR NAME --></h1>
+          <div class="subtitle"><!-- SUBTITLE: e.g. "Senior Engineer &bull; Role &bull; Credential" --></div>
+        </div>
+        <div class="contact-info">
+          <!-- email --><br>
+          <!-- phone &bull; City, ST --><br>
+          <a href="<!-- linkedin url -->">LinkedIn</a> &bull; <a href="<!-- github url -->">GitHub</a>
+        </div>
+      </header>
+
+      <section class="summary">
+        <!-- SUMMARY: 2-3 sentences tailored to the target role -->
+      </section>
+
+      <section>
+        <h2 class="section-title">Core Expertise</h2>
+        <div class="skills-grid">
+          <!-- SKILLS: 4 skill categories, each as:
+          <div class="skill-category"><span class="skill-label">Category:</span> skill1, skill2, ...</div>
+          -->
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Professional Experience</h2>
+        <!-- EXPERIENCE: 3-4 roles, each as:
+        <div class="experience-item">
+          <div class="item-header">
+            <span class="job-title">Role Title</span>
+            <span class="date-location">Dates</span>
+          </div>
+          <div class="company-info">Company Name</div>
+          <ul class="bullet-list">
+            <li>Accomplishment with <span class="highlight">key metric or technology</span>.</li>
+          </ul>
+        </div>
+        -->
+      </section>
+
+      <section>
+        <h2 class="section-title">Technical Projects</h2>
+        <!-- PROJECTS: 2-3 projects, each as:
+        <div class="project-item">
+          <span class="project-name">Project Name:</span> Description with <span class="highlight">key details</span>.
+        </div>
+        -->
+      </section>
+
+      <section>
+        <h2 class="section-title">Education &amp; Credentials</h2>
+        <div class="item-header">
+          <span class="job-title">M.S. &amp; B.S. in Computer Science (Machine Learning)</span>
+          <span class="date-location">Dec 2019</span>
+        </div>
+        <div class="edu-school">University of California, Riverside &bull; GPA: 3.71 &bull; Honors</div>
+        <div class="cred-pills">
+          <!-- CREDENTIALS: relevant pills, e.g.:
+          <span class="pill green">Active Secret Clearance</span>
+          <span class="pill">Google AI Startup Program (2025)</span>
+          -->
+        </div>
+      </section>
+
+    </div>
+  </body>
+</html>
