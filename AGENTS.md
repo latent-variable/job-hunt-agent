@@ -75,6 +75,12 @@ anything already `applied`, `screening`, `interviewing`, or `offer`.
    improvement, re-render, and re-review until no high-severity issues and no
    overclaim flags remain. Keep the application at `tailoring` until it passes.
    Honesty fixes are non-negotiable; the one-page rule still wins on every change.
+   **If the reviewer CLI is unavailable** (the tool exits 3, e.g. you run Codex,
+   Gemini/agy, Pi, or another harness with no `claude` on PATH), do NOT silently
+   finish: tell the user the review cycle could not run, recommend they run an
+   equivalent review with whatever agent they have (feed it the JD, the master CV,
+   and the honesty rubric from `skills/review-resume.md`), and leave the resume
+   flagged unreviewed at `tailoring`.
 
 ## Honesty rules (default, user can tighten)
 

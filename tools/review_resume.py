@@ -25,6 +25,7 @@ Usage:
 import argparse
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -86,9 +87,9 @@ def extract_json(text: str) -> dict:
     raise ValueError("unbalanced JSON in response")
 
 
-def call_claude(prompt: str, model: str, allow_read: bool = False,
+def call_claude(prompt: str, model: str, cli: str = "claude", allow_read: bool = False,
                 add_dir: Path | None = None, timeout: int = 240) -> dict:
-    cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", model]
+    cmd = [cli, "-p", prompt, "--output-format", "json", "--model", model]
     if allow_read:
         cmd += ["--allowedTools", "Read"]
         if add_dir:
@@ -99,6 +100,8 @@ def call_claude(prompt: str, model: str, allow_read: bool = False,
         res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
     except subprocess.TimeoutExpired:
         return {"_error": f"reviewer timed out after {timeout}s"}
+    except FileNotFoundError:
+        return {"_error": f"reviewer CLI '{cli}' not found on PATH"}
     if res.returncode != 0:
         return {"_error": f"claude exited {res.returncode}: {res.stderr.strip()[:400]}"}
     try:
@@ -193,8 +196,34 @@ def main() -> int:
     ap.add_argument("--cv", help="master CV path (auto-detected if omitted)")
     ap.add_argument("--lens", choices=["text", "visual", "both"], default="both")
     ap.add_argument("--model", default="sonnet", help="reviewer model (default: sonnet)")
+    ap.add_argument("--cli", default="claude",
+                    help="reviewer CLI in headless mode (default: claude). Must accept "
+                         "'-p PROMPT --output-format json'.")
     ap.add_argument("--json", help="write combined feedback to this JSON file")
     args = ap.parse_args()
+
+    # Reviewer CLI may not exist in every harness (Codex, Gemini/agy, Pi, Cursor...).
+    # Fail loud and clear so the caller never silently skips the review gate.
+    if shutil.which(args.cli) is None:
+        print(
+            "\n" + "=" * 70 +
+            "\n  REVIEW CYCLE UNAVAILABLE\n" + "=" * 70 +
+            f"\n  The reviewer CLI '{args.cli}' was not found on PATH, so the automated"
+            "\n  resume review could not run."
+            "\n"
+            "\n  DO NOT mark this resume complete. Tell the user the review cycle was"
+            "\n  skipped, then choose one:"
+            "\n    1. Install the Claude CLI (claude.ai/code) and re-run this command."
+            "\n    2. Point --cli at another agent CLI that supports headless"
+            "\n       '-p PROMPT --output-format json' (e.g. --cli <your-cli>)."
+            "\n    3. Run the review by hand with whatever agent you have: feed it the"
+            "\n       job description, the master CV, and the honesty rubric, and ask"
+            "\n       for the same JD-match + visual critique (see skills/review-resume.md)."
+            "\n"
+            "\n  Until reviewed, leave the application status at 'tailoring'.\n",
+            file=sys.stderr,
+        )
+        return 3
 
     resume = Path(args.resume)
     if not resume.exists():
@@ -217,7 +246,7 @@ def main() -> int:
     if args.lens in ("text", "both"):
         resume_text = strip_html(resume.read_text())
         print("Spawning text/JD reviewer (independent Claude)...", file=sys.stderr)
-        out["text"] = call_claude(text_prompt(jd, resume_text, cv), args.model)
+        out["text"] = call_claude(text_prompt(jd, resume_text, cv), args.model, cli=args.cli)
         print_report("TEXT / JD-MATCH REVIEW", out["text"])
 
     if args.lens in ("visual", "both"):
@@ -226,7 +255,8 @@ def main() -> int:
         else:
             print("Spawning visual reviewer (independent Claude, reads the PNG)...", file=sys.stderr)
             out["visual"] = call_claude(visual_prompt(png.resolve()), args.model,
-                                        allow_read=True, add_dir=resume.parent.resolve())
+                                        cli=args.cli, allow_read=True,
+                                        add_dir=resume.parent.resolve())
         print_report("VISUAL PRESENTATION REVIEW", out["visual"])
 
     if args.json:

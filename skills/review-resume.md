@@ -56,5 +56,22 @@ python tools/review_resume.py \
 
 ## Requirements
 
-- `claude` CLI installed and authenticated (`claude --version`).
+- `claude` CLI installed and authenticated (`claude --version`), or another headless
+  agent CLI passed via `--cli` that accepts `-p PROMPT --output-format json`.
 - The resume rendered to PNG (`render-resume.sh`) before a visual review.
+
+## If the reviewer CLI is missing (other harnesses)
+
+This tool drives the `claude` CLI by default. Agents run in many harnesses (Codex,
+Gemini/agy, Pi, Cursor) that may not have it. If the CLI is absent, the tool exits
+**code 3** with a "REVIEW CYCLE UNAVAILABLE" notice and runs nothing. When that
+happens:
+
+1. **Do not silently finish or claim the resume passed review.**
+2. **Tell the user plainly** the automated review cycle could not run.
+3. Recommend one of: install the Claude CLI; pass `--cli <your-cli>` if your agent
+   has a compatible headless `-p ... --output-format json` mode; or run the review
+   manually, hand your own agent the JD, the master CV, and the honesty rubric above
+   (JD-match + visual lenses, never suggest skills not in the CV) and apply the loop
+   by hand.
+4. Leave the application at `tailoring`, flagged unreviewed, until a review is done.
