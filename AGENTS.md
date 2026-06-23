@@ -117,6 +117,7 @@ unset PYTHONHOME PYTHONPATH && python3 tools/pipeline.py scan -l "remote" -n 25
 - `tools/fetch_jobs.py` — fetch listings from ATS platforms.
 - `tools/parse_job.py` — parse a posting into structured data (skills, salary, seniority, clearance).
 - `tools/rank_jobs.py` — score jobs against the user's profile (5 dimensions; reads `profile/ranking_profile.json`).
+- `tools/review_resume.py` — spawn independent Claude reviewers (fresh context, fed the JD + master CV + honesty rules) to critique a tailored resume on JD-match (text) and presentation (visual). Drives the review loop in `skills/review-resume.md`. Needs the `claude` CLI.
 - `tools/pipeline.py` — multi-company pipeline: `seed` / `list` / `scan` / `add` / `report`.
 - `./launch-dashboard.sh` — local dashboard at http://localhost:8080.
 
@@ -146,5 +147,5 @@ careers pages manually.
 ## Skills
 
 Reusable workflows in `skills/`: `onboarding.md`, `search-jobs.md`,
-`tailor-resume.md`, `track-company.md`, `log-application.md`, `update-cv.md`,
-`generate-pdf.md`, `interview-prep.md`. Load on demand by name.
+`tailor-resume.md`, `review-resume.md`, `track-company.md`, `log-application.md`,
+`update-cv.md`, `generate-pdf.md`, `interview-prep.md`. Load on demand by name.
