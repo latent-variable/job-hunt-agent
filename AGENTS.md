@@ -109,6 +109,14 @@ Same package as the resume: match its visual theme, save alongside it at
 Arc: specific hook reacting to the JD → proof with numbers → role alignment →
 differentiator → direct close.
 
+**Mandatory review gate — never skip.** A cover letter is not done until it passes
+the independent review loop (`skills/review-cover-letter.md`): `tools/review_resume.py
+--type cover-letter --companion <resume.html> --lens both`. Apply every
+honesty/overclaim and LLM-ism/cliche fix, complete the arc (especially a direct,
+non-cliche close), re-render, and re-review until clean. If the reviewer CLI is
+unavailable (exit 3), tell the user and recommend an equivalent manual review; do
+not silently finish.
+
 ## Tracking
 
 - **Applications** (`data/applications.json`): company, role, date, source URL,
@@ -162,5 +170,5 @@ careers pages manually.
 ## Skills
 
 Reusable workflows in `skills/`: `onboarding.md`, `search-jobs.md`,
-`tailor-resume.md`, `review-resume.md`, `track-company.md`, `log-application.md`,
-`update-cv.md`, `generate-pdf.md`, `interview-prep.md`. Load on demand by name.
+`tailor-resume.md`, `review-resume.md`, `review-cover-letter.md`, `track-company.md`,
+`log-application.md`, `update-cv.md`, `generate-pdf.md`, `interview-prep.md`. Load on demand by name.

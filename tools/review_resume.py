@@ -169,6 +169,79 @@ Schema:
 }}"""
 
 
+STYLE_RULE = (
+    "WRITING STYLE (flag violations): no em or en dashes as separators (use commas, "
+    "semicolons, or restructure); no 'X, not Y' constructions; no cliche closers ('I "
+    "look forward to discussing'); no meta-commentary on the company's strategy; no "
+    "philosophical openers about the product; no perfectly balanced triads; active "
+    "voice; short, direct sentences that react to JD specifics. These read as AI-written "
+    "and recruiters flag them instantly."
+)
+
+
+def cover_text_prompt(jd: str, letter_text: str, cv: str, resume_text: str | None) -> str:
+    resume_block = f"\n=== THE TAILORED RESUME (letter must complement, not repeat) ===\n{resume_text}\n" if resume_text else ""
+    return f"""You are an expert recruiter reviewing ONE cover letter for ONE job. Judge whether it
+reacts to THIS posting specifically, proves fit with real evidence, complements (does
+not just repeat) the resume, stays honest, and avoids AI-tell writing.
+
+{HONESTY_RULE}
+
+{STYLE_RULE}
+{resume_block}
+=== JOB DESCRIPTION ===
+{jd}
+
+=== CANDIDATE MASTER CV (ground truth for honesty) ===
+{cv}
+
+=== COVER LETTER (plain text) ===
+{letter_text}
+
+Check the arc (specific hook -> production proof with numbers -> role alignment ->
+differentiator -> direct close), JD reaction, honesty vs CV, and writing style. {JSON_ONLY}
+Schema:
+{{
+  "lens": "cover-letter-text",
+  "overall_score": <0-10 float>,
+  "jd_reaction_score": <0-10 float, how specifically it reacts to THIS posting>,
+  "arc_present": {{"hook":true,"proof_with_numbers":true,"role_alignment":true,"differentiator":true,"direct_close":true}},
+  "complements_resume": true,
+  "strengths": [<short strings>],
+  "issues": [
+    {{"severity":"high|med|low","location":"<paragraph/line>","problem":"...","suggestion":"<reword using only true content>","honesty_safe":true}}
+  ],
+  "overclaim_flags": [<phrasing that overstates vs CV; [] if none>],
+  "llm_isms_or_cliches": [<em-dashes, 'I look forward to', meta-strategy talk, balanced triads, etc.; [] if none>]
+}}"""
+
+
+def cover_visual_prompt(png_path: Path, companion_png: Path | None) -> str:
+    companion = ""
+    if companion_png:
+        companion = (f"\nAlso Read the matching RESUME image at this path and judge whether the two read "
+                     f"as one cohesive application package (same theme, fonts, color, header):\n  {companion_png}\n")
+    return f"""You are a design reviewer for a one-page cover letter. Use the Read tool to open the
+image at this exact path, then critique its visual presentation:
+
+  {png_path}
+{companion}
+Judge: one-page fit, readability and line length, professional letter layout (header,
+date, greeting, body, signature), whitespace, and theme consistency with the resume if
+provided. Do NOT comment on wording or job fit (another reviewer does that). {JSON_ONLY}
+Schema:
+{{
+  "lens": "cover-letter-visual",
+  "overall_score": <0-10 float>,
+  "one_page": true,
+  "matches_resume_theme": "yes|no|not_provided",
+  "strengths": [<short strings>],
+  "issues": [
+    {{"severity":"high|med|low","area":"layout|whitespace|readability|theme|alignment|clipping","problem":"...","suggestion":"..."}}
+  ]
+}}"""
+
+
 def resolve_cv(arg: str | None) -> Path | None:
     if arg:
         return Path(arg)
@@ -190,10 +263,14 @@ def print_report(label: str, data: dict) -> None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Spawn independent Claude resume reviewers")
-    ap.add_argument("--resume", required=True, help="path to the tailored resume .html")
+    ap = argparse.ArgumentParser(description="Spawn independent Claude reviewers for a resume or cover letter")
+    ap.add_argument("--resume", required=True, help="path to the document .html (resume or cover letter)")
     ap.add_argument("--jd", required=True, help="path to the job description (.md/.txt)")
     ap.add_argument("--cv", help="master CV path (auto-detected if omitted)")
+    ap.add_argument("--type", choices=["resume", "cover-letter"], default="resume",
+                    help="document type (default: resume)")
+    ap.add_argument("--companion", help="cover-letter only: the matching resume .html/.png to "
+                    "check theme consistency and that the letter complements (not repeats) it")
     ap.add_argument("--lens", choices=["text", "visual", "both"], default="both")
     ap.add_argument("--model", default="sonnet", help="reviewer model (default: sonnet)")
     ap.add_argument("--cli", default="claude",
@@ -209,16 +286,16 @@ def main() -> int:
             "\n" + "=" * 70 +
             "\n  REVIEW CYCLE UNAVAILABLE\n" + "=" * 70 +
             f"\n  The reviewer CLI '{args.cli}' was not found on PATH, so the automated"
-            "\n  resume review could not run."
+            "\n  review could not run."
             "\n"
-            "\n  DO NOT mark this resume complete. Tell the user the review cycle was"
+            "\n  DO NOT mark this document complete. Tell the user the review cycle was"
             "\n  skipped, then choose one:"
             "\n    1. Install the Claude CLI (claude.ai/code) and re-run this command."
             "\n    2. Point --cli at another agent CLI that supports headless"
             "\n       '-p PROMPT --output-format json' (e.g. --cli <your-cli>)."
             "\n    3. Run the review by hand with whatever agent you have: feed it the"
             "\n       job description, the master CV, and the honesty rubric, and ask"
-            "\n       for the same JD-match + visual critique (see skills/review-resume.md)."
+            "\n       for the same critique (see skills/review-resume.md or review-cover-letter.md)."
             "\n"
             "\n  Until reviewed, leave the application status at 'tailoring'.\n",
             file=sys.stderr,
@@ -243,19 +320,32 @@ def main() -> int:
     cv = cv_path.read_text()
     out: dict = {"resume": str(resume), "jd": str(jd_path), "cv": str(cv_path)}
 
+    # Companion resume (for cover-letter theme + non-duplication checks)
+    companion_png = None
+    companion_text = None
+    if args.companion:
+        comp = Path(args.companion)
+        cpng = comp.with_suffix(".png")
+        companion_png = cpng if cpng.exists() else None
+        if comp.suffix.lower() in (".html", ".htm") and comp.exists():
+            companion_text = strip_html(comp.read_text())
+
     if args.lens in ("text", "both"):
-        resume_text = strip_html(resume.read_text())
-        print("Spawning text/JD reviewer (independent Claude)...", file=sys.stderr)
-        out["text"] = call_claude(text_prompt(jd, resume_text, cv), args.model, cli=args.cli)
+        doc_text = strip_html(resume.read_text())
+        print(f"Spawning text reviewer (independent {args.cli})...", file=sys.stderr)
+        prompt = (cover_text_prompt(jd, doc_text, cv, companion_text)
+                  if args.type == "cover-letter" else text_prompt(jd, doc_text, cv))
+        out["text"] = call_claude(prompt, args.model, cli=args.cli)
         print_report("TEXT / JD-MATCH REVIEW", out["text"])
 
     if args.lens in ("visual", "both"):
         if not png.exists():
-            out["visual"] = {"_error": f"PNG not found: {png}. Render the resume first."}
+            out["visual"] = {"_error": f"PNG not found: {png}. Render the document first."}
         else:
-            print("Spawning visual reviewer (independent Claude, reads the PNG)...", file=sys.stderr)
-            out["visual"] = call_claude(visual_prompt(png.resolve()), args.model,
-                                        cli=args.cli, allow_read=True,
+            print(f"Spawning visual reviewer (independent {args.cli}, reads the PNG)...", file=sys.stderr)
+            vprompt = (cover_visual_prompt(png.resolve(), companion_png.resolve() if companion_png else None)
+                       if args.type == "cover-letter" else visual_prompt(png.resolve()))
+            out["visual"] = call_claude(vprompt, args.model, cli=args.cli, allow_read=True,
                                         add_dir=resume.parent.resolve())
         print_report("VISUAL PRESENTATION REVIEW", out["visual"])
 
