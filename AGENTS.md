@@ -69,6 +69,12 @@ anything already `applied`, `screening`, `interviewing`, or `offer`.
 7. **Verify the render.** `render-resume.sh` exits non-zero on overflow; trim
    until it passes, then read the PNG: too much empty space → add content back;
    clipping → trim.
+8. **Mandatory review gate — never skip.** A resume is not done until it passes the
+   automated review loop. Run `tools/review_resume.py --lens both` (see
+   `skills/review-resume.md`), apply every honesty/overclaim fix and `honesty_safe`
+   improvement, re-render, and re-review until no high-severity issues and no
+   overclaim flags remain. Keep the application at `tailoring` until it passes.
+   Honesty fixes are non-negotiable; the one-page rule still wins on every change.
 
 ## Honesty rules (default, user can tighten)
 

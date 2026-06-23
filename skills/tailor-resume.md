@@ -27,8 +27,15 @@ Generate a tailored one-page resume for a specific posting.
 12. Add/update `data/applications.json` (status `tailoring`).
 13. Render with `./render-resume.sh`; if it exits non-zero (overflow), trim until
     it passes. Then read the PNG: clipping → trim; too much empty space → add back.
+14. **Mandatory review gate — do not skip.** Run the independent review loop
+    (`skills/review-resume.md`): `python tools/review_resume.py --resume <html>
+    --jd <jd.md> --lens both`. Apply every honesty/overclaim fix and `honesty_safe`
+    improvement, re-render, re-review until no high-severity issues and no overclaim
+    flags remain. The application stays `tailoring` until it passes; only then is the
+    resume done.
 
 ## Output
 
 - Tailored HTML + verified one-page PDF + PNG in `resumes/generated/<company_role>/`.
+- Passed the independent dual-lens review loop (no high-severity issues, no overclaim flags).
 - `applications.json` updated.
