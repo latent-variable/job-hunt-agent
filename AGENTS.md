@@ -61,7 +61,10 @@ anything already `applied`, `screening`, `interviewing`, or `offer`.
 4. **Unique visual identity per resume.** Research the company's brand; design a
    distinct theme (accent colors, font pairing, header layout). A fintech resume
    should not look like a gaming-studio resume. Reuse the HTML structure; refresh
-   the visual layer each time.
+   the visual layer each time. **Vary the fonts every time** — pick a distinct
+   Google Fonts pairing (display/heading + body) per resume; don't default to one
+   family (e.g. Inter) by habit. Check recent resumes in `resumes/generated/` and
+   choose a pairing none of them used.
 5. **Embed proof links.** Hyperlink company names and named projects to their
    URLs, styled in the theme accent color, never default blue.
 6. **One page** (US Letter, 816x1056px) unless the user changes this rule. If it
